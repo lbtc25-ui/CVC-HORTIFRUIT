@@ -324,6 +324,9 @@ const vendaParaDB = (v) => ({
   emitir_nf: v.emitirNf ?? true,
   // Texto livre que sai nas "Informações complementares" da NF-e (migracao-43).
   observacao_nf: v.observacaoNf?.trim() || null,
+  // Quem recebeu o dinheiro: 'cvc', 'carvalho_cruz' ou 'avf' (migracao-69). Só
+  // vai quando preenchido — um banco sem a coluna segue aceitando as vendas.
+  ...(v.recebedor ? { recebedor: v.recebedor } : {}),
   // Caixas IFCO que foram no pedido (migracao-63) — base da taxa "R$ por caixa".
   caixas_ifco: Math.max(0, Math.round(num(v.caixasIfco))),
   // pedido_por NÃO sobe: só o link grava (migracao-29), e o upsert mantém o que está no banco.
@@ -374,6 +377,7 @@ const vendaDoDB = (r) => {
     aguardandoConferencia: r.aguardando_conferencia ?? false,
     emitirNf: r.emitir_nf ?? true,
     observacaoNf: r.observacao_nf ?? "",
+    recebedor: r.recebedor ?? "",
     caixasIfco: num(r.caixas_ifco),
     pedidoPor: r.pedido_por ?? "",
     criadoEm: r.criado_em,
@@ -466,6 +470,9 @@ const despesaParaDB = (d) => ({
   categoria: d.categoria,
   descricao: d.descricao || null,
   valor: num(d.valor),
+  // Despesa de uma fruta (migracao-70). Só vai quando preenchida, para o banco
+  // sem a coluna continuar aceitando as despesas gerais.
+  ...(d.fruta ? { fruta: d.fruta } : {}),
   // Só vão quando há comprovante: antes de rodar a migração-54 o banco não tem
   // essas colunas, e mandá-las (mesmo nulas) travaria toda despesa na fila.
   ...comprovanteParaDB(d),
@@ -478,6 +485,7 @@ const despesaDoDB = (r) => ({
   categoria: r.categoria,
   descricao: r.descricao ?? "",
   valor: num(r.valor),
+  fruta: r.fruta ?? "",
   ...comprovanteDoDB(r),
   criadoEm: r.criado_em,
 });

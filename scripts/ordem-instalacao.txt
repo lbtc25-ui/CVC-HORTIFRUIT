@@ -66,3 +66,5 @@ migracao-56-sinalizacoes-clientes.sql
 migracao-57-comprovante-outros-lancamentos.sql
 migracao-58-acoes-promotor.sql
 banco-novo-antes-do-resgate.sql
+migracao-69-recebedor-repasses.sql
+migracao-70-despesa-por-fruta.sql

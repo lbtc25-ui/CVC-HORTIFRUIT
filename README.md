@@ -22,6 +22,21 @@ com aviso para dividir em dois pedidos. Devoluções saem pelo mesmo emitente da
 venda; consultas/DANFE/XML de notas antigas tentam a conta da CVC e, em 404, a
 da Carvalho (`api/spedy.js`).
 
+## Frutas (a planilha dentro do app)
+
+A aba **Frutas** (só sócio master) reproduz a aba de cada fruta da planilha:
+escolhe-se a fruta e aparecem **Venda**, **Compra**, **Despesas com a fruta** e
+**Perdas**, com venda, compra, resultado e estoque em cima. Todas as células
+são editáveis e gravam ao sair do campo — é o registro de verdade (venda,
+compra, despesa, perda), que sincroniza como qualquer outro. Na venda, a coluna
+**Recebeu** diz em que conta o dinheiro caiu (CVC, CC ou AVF; migração 69) e
+pedido com NF-e emitida fica travado. A despesa da fruta usa `despesas.fruta`
+(migração 70).
+
+Carga do histórico (planilha + WhatsApp até 05/10/2026): ver
+[`docs/cruzamento-cvc-2026-10-05.md`](docs/cruzamento-cvc-2026-10-05.md) e
+`supabase/importacao-cvc-2026-10-05.sql` (rodar depois das migrações 68, 69 e 70).
+
 ## Pendente (a combinar)
 
 - Banco novo: rodar `supabase/instalar.sql` num projeto Supabase da CVC e

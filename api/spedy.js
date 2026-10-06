@@ -40,45 +40,25 @@ const caminhoPermitido = (path) =>
   !path.includes("..") &&
   PREFIXOS_PERMITIDOS.some((p) => path === p || path.startsWith(`${p}/`) || path.startsWith(`${p}?`));
 
-// A CVC emite NF-e por duas contas da Spedy: a dela (SPEDY_API_KEY) e a da
-// Carvalho Cruz (SPEDY_API_KEY_CARVALHO), enquanto os produtos ainda são
-// faturados pelo CNPJ da Carvalho. O app diz qual conta usar em `emitente`
-// ("cvc" | "carvalho_cruz"). Chamadas por id de nota (consultar, DANFE, XML,
-// cancelar) vêm sem emitente quando o registro é antigo: nesse caso tenta a
-// CVC e, se a Spedy responder 404, a Carvalho.
-const CHAVES = {
-  cvc: () => process.env.SPEDY_API_KEY,
-  carvalho_cruz: () => process.env.SPEDY_API_KEY_CARVALHO,
-};
-
-const ordemDeChaves = (emitente) => {
-  if (emitente && !CHAVES[emitente]) return null;
-  const ordem = emitente ? [emitente] : Object.keys(CHAVES);
-  return ordem.filter((e) => CHAVES[e]());
-};
+// A CVC emite NF-e por uma conta só da Spedy (SPEDY_API_KEY).
+const chave = () => process.env.SPEDY_API_KEY;
 
 export default async function handler(req, res) {
   const baseUrl = process.env.SPEDY_BASE_URL;
 
-  let path, method, body, versaoNfe, emitente;
+  let path, method, body, versaoNfe;
   if (req.method === "GET") {
     path = req.query?.path;
-    emitente = req.query?.emitente;
     method = "GET";
   } else if (req.method === "POST") {
-    ({ path, method = "POST", body, versaoNfe, emitente } = req.body ?? {});
+    ({ path, method = "POST", body, versaoNfe } = req.body ?? {});
   } else {
     res.status(405).json({ erro: "Método não permitido" });
     return;
   }
 
-  const emitentes = ordemDeChaves(emitente);
-  if (!baseUrl || !emitentes?.length) {
-    res.status(500).json({
-      erro: emitentes
-        ? "SPEDY_BASE_URL e a chave do emitente (SPEDY_API_KEY / SPEDY_API_KEY_CARVALHO) não estão configurados no servidor"
-        : `Emitente "${emitente}" desconhecido`,
-    });
+  if (!baseUrl || !chave()) {
+    res.status(500).json({ erro: "SPEDY_BASE_URL e SPEDY_API_KEY não estão configurados no servidor" });
     return;
   }
 
@@ -122,20 +102,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    let resposta;
-    for (const e of emitentes) {
-      resposta = await fetch(`${baseUrl}${path}`, {
-        method,
-        headers: {
-          "X-Api-Key": CHAVES[e](),
-          ...(method === "GET" ? {} : { "Content-Type": "application/json" }),
-        },
-        body: method === "GET" ? undefined : JSON.stringify(body ?? {}),
-      });
-      // Só tenta a próxima conta quando o emitente não foi informado e a
-      // nota não existe nesta (404). Qualquer outra resposta é a resposta.
-      if (resposta.status !== 404 || emitente) break;
-    }
+    const resposta = await fetch(`${baseUrl}${path}`, {
+      method,
+      headers: {
+        "X-Api-Key": chave(),
+        ...(method === "GET" ? {} : { "Content-Type": "application/json" }),
+      },
+      body: method === "GET" ? undefined : JSON.stringify(body ?? {}),
+    });
 
     const contentType = resposta.headers.get("content-type") || "";
     if (contentType.includes("json")) {

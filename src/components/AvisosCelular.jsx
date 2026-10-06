@@ -138,7 +138,7 @@ export default function AvisosCelular() {
           )}
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginTop: 14 }}>
-            <Input label="Tópico do ntfy" placeholder="ex.: carvalhocruz-pedidos-x7k2q9" value={topico}
+            <Input label="Tópico do ntfy" placeholder="ex.: cvc-pedidos-x7k2q9" value={topico}
               onChange={(e) => setTopico(e.target.value.replace(/\s/g, ""))} />
             <Input label="Endereço do app (abre ao tocar no aviso)" placeholder={window.location.origin + "/"} value={urlApp}
               onChange={(e) => setUrlApp(e.target.value)} />

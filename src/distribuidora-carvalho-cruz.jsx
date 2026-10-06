@@ -30,7 +30,7 @@ import {
   textoBuscavel,
 } from "./lib/cadastro";
 import {
-  AGRUPAMENTOS, CORES_SERIE, EMPRESA_PADRAO, agruparItens, chaveGrupo, chavesContinuas, dreDoRecorte, empresaDasFrutas,
+  AGRUPAMENTOS, CORES_SERIE, EMPRESA_PADRAO, agruparItens, chaveGrupo, chavesContinuas, dreDoRecorte,
   intervaloAnterior, noIntervalo, pct, rateioOperacao, somarItens, rotuloGrupo, rotuloIntervalo, variacao,
 } from "./lib/analise";
 import { efeitosDasDevolucoes } from "./lib/notas";
@@ -120,7 +120,6 @@ function frutasComEstoque(dados) {
  */
 const EMPRESAS = [
   { value: "cvc", label: "CVC" },
-  { value: "carvalho_cruz", label: "Carvalho Cruz" },
 ];
 const nomeDaEmpresa = (empresa) => EMPRESAS.find((e) => e.value === empresa)?.label ?? "CVC";
 
@@ -200,16 +199,6 @@ const ChipBonificado = () => (
 );
 
 /** Pedido que o próprio cliente fez pelo link — laranja enquanto ninguém conferiu. */
-/** De qual empresa é o produto (ou a fruta): produção própria e revenda não se misturam. */
-const ChipEmpresa = ({ empresa }) => {
-  const cvc = empresa !== "carvalho_cruz";
-  return (
-    <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 10, whiteSpace: "nowrap",
-      background: cvc ? "#E8F1FB" : `${COLORS.verde}1A`, color: cvc ? COLORS.azul : COLORS.verde }}>
-      {nomeDaEmpresa(empresa)}
-    </span>
-  );
-};
 
 const ChipPedidoCliente = ({ conferir }) => (
   <span style={{
@@ -1003,8 +992,8 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
     });
     const tabelas = [resumo, evolucao, ...rankings];
     return formato === "xlsx"
-      ? exportarXlsx("painel-carvalho-cruz", tabelas)
-      : exportarPdf("painel-carvalho-cruz", `Painel — ${descricaoRecorte}`, tabelas);
+      ? exportarXlsx("painel-cvc", tabelas)
+      : exportarPdf("painel-cvc", `Painel — ${descricaoRecorte}`, tabelas);
   };
 
   // Custo total por quilo vendido: fruta + operação, divididos pelos kg vendidos.
@@ -1020,7 +1009,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
       ["Quilos vendidos", kg(acumulado.kg), COLORS.cinzaEscuro, "Soma dos kg dos itens vendidos no período."],
       ["Quilos bonificados", kg(acumulado.kgBonificado), COLORS.cinzaEscuro, "Kg dados como bonificação nos pedidos do período."],
       ["Preço médio / kg", brl(acumulado.precoMedio), COLORS.verde, "Receita ÷ quilos vendidos."],
-      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da Carvalho Cruz ÷ kg vendidos pela empresa no período."],
+      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da CVC ÷ kg vendidos pela empresa no período."],
       ["Custo médio total / kg", brl(custoTotalKg), COLORS.laranjaEscuro, "(Fruta + custo da operação) ÷ quilos vendidos. Soma o custo médio da fruta com o custo da operação por kg."],
       ["Custo operação rateado", brl(acumulado.custoOperacao), COLORS.laranjaEscuro, "Kg vendidos no recorte × custo operação / kg."],
       ["Taxas dos clientes", brl(acumulado.taxas), COLORS.laranjaEscuro, "Caixas IFCO, taxa de CD, taxa de antecipação e outras, cadastradas na rede ou loja."],
@@ -1038,7 +1027,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
       ["Quilos bonificados", kg(acumulado.kgBonificado), COLORS.cinzaEscuro, "Kg dados como bonificação nos pedidos do período."],
       ["Preço médio / kg", brl(acumulado.precoMedio), COLORS.verde, "Receita ÷ quilos vendidos."],
       ["Custo médio / kg", brl(acumulado.custoMedio), COLORS.laranjaEscuro, "Mercadoria comprada ÷ kg comprados no período (média ponderada pelo peso)."],
-      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da Carvalho Cruz ÷ kg vendidos pela empresa no período."],
+      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da CVC ÷ kg vendidos pela empresa no período."],
       ["Custo médio total / kg", brl(custoTotalKg), COLORS.laranjaEscuro, "(Fruta + custo da operação) ÷ quilos vendidos. Soma o custo médio da fruta com o custo da operação por kg."],
     ];
 
@@ -1125,7 +1114,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
       <BarraFiltros
         dados={dados} filtros={filtros} setFiltros={setFiltros} limpar={limpar} intervalo={intervalo}
         campos={["agrupar", "empresa", "rede", "cliente", "fruta", "produto"]}
-        meses={meses} frutas={frutas} empresas={EMPRESAS}
+        meses={meses} frutas={frutas}
       />
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: 14 }}>
@@ -1581,8 +1570,8 @@ const LinkDePedido = ({ loja, rede, produtos, setDados, daRede = false }) => {
   if (!supabaseConfigurado) return null;
 
   const mensagem = daRede
-    ? `Olá! Este é o link para fazer os pedidos das lojas ${rede.nome} com a Carvalho Cruz. Dá para pedir para várias lojas de uma vez:\n${link}`
-    : `Olá! Este é o link para fazer os pedidos da ${rede?.nome ?? ""} ${loja.nome} com a Carvalho Cruz:\n${link}`;
+    ? `Olá! Este é o link para fazer os pedidos das lojas ${rede.nome} com a CVC. Dá para pedir para várias lojas de uma vez:\n${link}`
+    : `Olá! Este é o link para fazer os pedidos da ${rede?.nome ?? ""} ${loja.nome} com a CVC:\n${link}`;
   const telefone = soDigitos((daRede ? rede?.telefone : loja.telefone || rede?.telefone) || "");
   const whatsapp = `https://wa.me/${telefone ? (telefone.length <= 11 ? `55${telefone}` : telefone) : ""}?text=${encodeURIComponent(mensagem)}`;
 
@@ -1957,7 +1946,7 @@ const Clientes = ({ dados, setDados, podeRemover }) => {
     const lojas = [...dados.lojas]
       .map((l) => ({ ...l, rede: nomeRede(l.redeId), loja: l.nome }))
       .sort((a, b) => a.rede.localeCompare(b.rede) || a.loja.localeCompare(b.loja));
-    return exportarXlsx("clientes-carvalho-cruz", [
+    return exportarXlsx("clientes-cvc", [
       { nome: "Lojas", colunas: colunasCadastro, linhas: lojas },
       { nome: "Redes", colunas: colunasCadastro.filter((c) => c.chave !== "loja"), linhas: redes },
     ]);
@@ -2420,7 +2409,7 @@ const CSTS_PIS_COFINS = [
 const UNIDADES_NOTA = ["KG", "UN", "BAG", "CX"];
 
 /** Ordem dos produtos no pedido: CVC primeiro, depois os faturados pela Carvalho Cruz. */
-const ordemNaVenda = (p) => (p.empresa === "carvalho_cruz" ? 1 : 0);
+const ordemNaVenda = () => 0;
 
 /** O que falta no produto para emitir NF-e pelo app. null = pronto. */
 function pendenciaFiscal(p) {
@@ -2462,7 +2451,6 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
   // Cruz) para perdas e contagens.
   const frutas = useMemo(() => frutasDe(dados), [dados]);
   const frutasEstoque = useMemo(() => frutasComEstoque(dados), [dados]);
-  const empresaDaFruta = useMemo(() => empresaDasFrutas(dados.produtos), [dados.produtos]);
   const negativas = saldos.filter((s) => s.estoque < 0);
 
   // ─── Pedidos do dia seguinte ─────────────────────────────────────────────
@@ -2700,12 +2688,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
     : formProduto.fruta;
   // Digitar "laranja pera" é escolher a Laranja Pera, não criar outra.
   const frutaFinal = frutas.find((f) => f.toLowerCase() === frutaEscolhida.toLowerCase()) ?? frutaEscolhida;
-  // Os outros produtos da mesma fruta: no cadastro eles decidem a empresa; na
-  // edição, trocar a empresa leva todos eles junto.
-  const irmaos = dados.produtos.filter((p) => p.fruta === frutaFinal && p.id !== editandoProduto);
-  const empresaTravada = editandoProduto ? null : empresaDaFruta.get(frutaFinal);
-  const empresaProduto = empresaTravada ?? formProduto.empresa;
-  const levaIrmaos = !!editandoProduto && irmaos.some((p) => (p.empresa ?? EMPRESA_PADRAO) !== empresaProduto);
+  const empresaProduto = EMPRESA_PADRAO;
   // O código sai na NF-e e identifica o produto: não pode se repetir.
   const codigoNormalizado = formProduto.codigo.trim().toUpperCase();
   const produtoComMesmoCodigo = codigoNormalizado
@@ -2803,18 +2786,13 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
       return;
     }
 
-    if (levaIrmaos && !confirm(
-      `${frutaFinal} passa a ser da ${nomeDaEmpresa(empresaProduto)} — junto com ${irmaos.map((p) => p.nome).join(", ")}. ` +
-      "O estoque é da fruta, então todos os produtos dela mudam de empresa. Continuar?"
-    )) return;
-
     setDados((d) => ({
       ...d,
       produtos: d.produtos.map((p) => {
         if (p.id === editandoProduto) return { ...p, ...campos };
-        // Empresa e peso da caixa são da fruta: acompanham todos os produtos dela.
+        // O peso da caixa é da fruta: acompanha todos os produtos dela.
         if (p.fruta === frutaFinal) {
-          return { ...p, ...(levaIrmaos ? { empresa: empresaProduto } : {}), kgPorCaixa: campos.kgPorCaixa, pesoMedioUnidade: campos.pesoMedioUnidade };
+          return { ...p, kgPorCaixa: campos.kgPorCaixa, pesoMedioUnidade: campos.pesoMedioUnidade };
         }
         return p;
       }),
@@ -2971,7 +2949,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
                     </button>
                   )}
                 </span>
-                {empresaDaFruta.get(s.fruta) === "carvalho_cruz" && <ChipEmpresa empresa="carvalho_cruz" />}
+                
               </div>
               <div style={{ fontSize: 30, fontWeight: 800, color: cor, marginTop: 6, lineHeight: 1.1 }}>
                 {s.estoque.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}
@@ -3345,7 +3323,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 740 }}>
             <thead style={{ background: COLORS.cinzaClaro }}>
               <tr>
-                {["Produto", "Fruta", "Empresa", "Vendido em", "Caixa", "NCM", "Nota fiscal", ""].map((h, i) => (
+                {["Produto", "Fruta", "Vendido em", "Caixa", "NCM", "Nota fiscal", ""].map((h, i) => (
                   <th key={i} style={{ textAlign: "left", fontSize: 11.5, color: COLORS.cinza, padding: "10px 16px", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5, whiteSpace: "nowrap" }}>{h}</th>
                 ))}
               </tr>
@@ -3360,7 +3338,6 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
                     <tr key={p.id} style={{ borderTop: `1px solid ${COLORS.cinzaClaro}` }}>
                       <td style={{ padding: "11px 16px", fontSize: 14, fontWeight: 600, color: COLORS.cinzaEscuro }}>{p.nome}</td>
                       <td style={{ padding: "11px 16px", fontSize: 13, color: COLORS.cinza, whiteSpace: "nowrap" }}>{p.fruta}</td>
-                      <td style={{ padding: "11px 16px", whiteSpace: "nowrap" }}><ChipEmpresa empresa={p.empresa} /></td>
                       <td style={{ padding: "11px 16px", fontSize: 13, color: COLORS.cinza, whiteSpace: "nowrap" }}>
                         {emSaco ? `Saco de ${kg(p.kgPorUnidade)}` : "Agranel"}
                       </td>
@@ -3570,19 +3547,6 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
             )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <Select label="Empresa que emite a nota *" value={empresaProduto} disabled={!!empresaTravada}
-                onChange={(e) => setFormProduto((f) => ({ ...f, empresa: e.target.value }))}
-                options={EMPRESAS} style={empresaTravada ? { background: COLORS.cinzaClaro } : undefined} />
-              <div style={{ fontSize: 12, color: COLORS.cinza, lineHeight: 1.5 }}>
-                {empresaTravada
-                  ? <>{frutaFinal} já é vendida pela <strong>{nomeDaEmpresa(empresaTravada)}</strong> — o estoque é da fruta e não se divide entre empresas. Para vender pela outra, cadastre uma fruta nova (ex.: “{frutaFinal} revenda”).</>
-                  : levaIrmaos
-                    ? <>Os outros produtos de {frutaFinal} ({irmaos.map((p) => p.nome).join(", ")}) também passam para a <strong>{nomeDaEmpresa(empresaProduto)}</strong> — o estoque é da fruta e não se divide.</>
-                    : <>A receita deste produto conta para a empresa escolhida no Painel e no Financeiro, sem se misturar com a outra.</>}
-              </div>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <Input label="Peso de uma caixa (kg)" type="number" inputMode="decimal" step="0.1" min="0"
                 value={formProduto.kgPorCaixa} onChange={campoProduto("kgPorCaixa")} placeholder="25" />
               <div style={{ fontSize: 12, color: COLORS.cinza }}>
@@ -3612,7 +3576,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
               <div>
                 <div style={{ fontWeight: 700, fontSize: 13.5, color: COLORS.cinzaEscuro }}>Dados da nota fiscal</div>
                 <div style={{ fontSize: 12, color: COLORS.cinza, lineHeight: 1.5, marginTop: 2 }}>
-                  Confirme com o contador. Produção própria da Carvalho Cruz: CFOP 5.101. Revenda (CVC): 5.102.
+                  Confirme com o contador. Revenda: CFOP 5.102.
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -3773,7 +3737,7 @@ const ConferenciaPdf = ({ importacao, total, lojaEscolhida, produtos, aoEscolher
   const opcoesProduto = [{ value: "", label: "Escolher produto…" },
     ...[...produtos]
       .sort((a, b) => ordemNaVenda(a) - ordemNaVenda(b) || a.nome.localeCompare(b.nome, "pt-BR"))
-      .map((p) => ({ value: p.id, label: p.empresa === "carvalho_cruz" ? `${p.nome} · Carvalho` : p.nome }))];
+      .map((p) => ({ value: p.id, label: p.nome }))];
   return (
     <div style={{ background: "#FFF3E0", border: `1px solid ${COLORS.laranja}`, borderRadius: 10, padding: "10px 14px", fontSize: 13, color: COLORS.cinzaEscuro, lineHeight: 1.5, display: "flex", flexDirection: "column", gap: 8 }}>
       <div>
@@ -4344,7 +4308,7 @@ const Vendas = ({ dados, setDados, podeRemover }) => {
     total: brl(v.total),
     status: v.status,
   }));
-  const nomeExportacao = `vendas-carvalho-cruz${filtroStatus === "todos" ? "" : `-${filtroStatus}`}`;
+  const nomeExportacao = `vendas-cvc${filtroStatus === "todos" ? "" : `-${filtroStatus}`}`;
   const exportarVendasXlsx = () =>
     exportarXlsx(nomeExportacao, [{ nome: "Vendas", colunas: colunasVendas, linhas: linhasVendas }]);
   const exportarVendasPdf = () =>
@@ -4694,7 +4658,7 @@ const Vendas = ({ dados, setDados, podeRemover }) => {
                       .sort((a, b) => ordemNaVenda(a) - ordemNaVenda(b) || a.nome.localeCompare(b.nome, "pt-BR"))
                       .map((p) => ({
                         value: p.id,
-                        label: p.empresa === "carvalho_cruz" ? `${p.nome} · Carvalho` : p.nome,
+                        label: p.nome,
                       }))]} />
                 <Select label="Natureza" value={item.natureza} onChange={(e) => mudarNatureza(e.target.value)}
                   options={[{ value: "venda", label: "Venda" }, { value: "bonificacao", label: "Bonificação" }]} />
@@ -6699,8 +6663,8 @@ const Compras = ({ dados, setDados }) => {
       },
     ];
     return formato === "xlsx"
-      ? exportarXlsx("compras-carvalho-cruz", tabelas)
-      : exportarPdf("compras-carvalho-cruz", `Compras — ${descricaoRecorte}`, tabelas);
+      ? exportarXlsx("compras-cvc", tabelas)
+      : exportarPdf("compras-cvc", `Compras — ${descricaoRecorte}`, tabelas);
   };
 
   const totalPrevia = (Number(form.pesoKg) || 0) * (Number(form.valorKg) || 0);
@@ -7052,8 +7016,8 @@ const Despesas = ({ dados, setDados, caixa, aoMudarCaixa, lancarAgora, aoLancar 
       },
     ];
     return formato === "xlsx"
-      ? exportarXlsx("despesas-carvalho-cruz", tabelas)
-      : exportarPdf("despesas-carvalho-cruz", `Despesas — ${descricaoRecorte}`, tabelas);
+      ? exportarXlsx("despesas-cvc", tabelas)
+      : exportarPdf("despesas-cvc", `Despesas — ${descricaoRecorte}`, tabelas);
   };
 
   // Despesa com comprovante precisa dizer do que se trata: o comprovante do
@@ -8737,7 +8701,7 @@ const Financeiro = ({ dados }) => {
       <BarraFiltros
         dados={dados} filtros={filtros} setFiltros={setFiltros} limpar={limpar} intervalo={intervalo}
         campos={["agrupar", "empresa", "rede", "cliente", "fruta", "produto"]}
-        meses={meses} frutas={frutas} empresas={EMPRESAS}
+        meses={meses} frutas={frutas}
       />
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: 14 }}>
@@ -9408,7 +9372,7 @@ export default function AppCarvalhoCruz() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: trilho ? "center" : "flex-start", gap: 11 }}>
             <LogoSelo tamanho={trilho ? 40 : 42} />
             {!trilho && <div>
-              <div style={{ color: COLORS.branco, fontWeight: 800, fontSize: 13, lineHeight: 1.2, letterSpacing: 0.3 }}>Carvalho Cruz</div>
+              <div style={{ color: COLORS.branco, fontWeight: 800, fontSize: 13, lineHeight: 1.2, letterSpacing: 0.3 }}>CVC Hortifruit</div>
               <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10 }}>Hortifruits • Aracaju-SE</div>
             </div>}
           </div>

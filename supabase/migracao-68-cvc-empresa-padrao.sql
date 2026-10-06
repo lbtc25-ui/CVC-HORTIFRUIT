@@ -19,10 +19,11 @@
 --  para 'cvc' — ele os devolveria para 'carvalho_cruz'.
 -- ============================================================================
 
+-- ATENÇÃO: no banco da CVC rode a migracao-69-tudo-cvc.sql, não esta.
+
 begin;
 
-update public.produtos set empresa = 'carvalho_cruz';
-update public.metas    set empresa = 'carvalho_cruz';
+-- (as duas linhas que marcavam tudo como 'carvalho_cruz' saíram: ver migracao-69)
 
 alter table public.produtos alter column empresa set default 'cvc';
 alter table public.metas    alter column empresa set default 'cvc';

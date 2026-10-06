@@ -473,7 +473,7 @@ export default function Usuarios({ dados, setDados }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             <Input label="Nome *" value={form.nome} placeholder="Nome de quem vai usar"
               onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} />
-            <Input label="E-mail *" type="email" value={form.email} placeholder="pessoa@carvalhocruz.com.br"
+            <Input label="E-mail *" type="email" value={form.email} placeholder="pessoa@empresa.com.br"
               autoCapitalize="none" spellCheck={false}
               onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
             <Input label="Telefone" value={form.telefone} placeholder="(79) 9 9999-9999"

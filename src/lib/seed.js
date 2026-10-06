@@ -109,11 +109,10 @@ const produtos = [
 // ─── Fornecedores ───────────────────────────────────────────────────────────
 
 const fornecedores = [
-  { nome: "Carvalho Cruz", produto: "Laranja pera e abóbora", cidade: "Aracaju-SE" },
   { nome: "FB",            produto: "Laranja lima",           cidade: "Aracaju-SE" },
 ].map((f, i) => ({
   ...f,
-  id: idFornecedor(i + 1),
+  id: idFornecedor(i + 2), // FB manteve o id 2 do seed.sql
   telefone: "",
   status: "ativo",
   criadoEm: CRIADO_EM,

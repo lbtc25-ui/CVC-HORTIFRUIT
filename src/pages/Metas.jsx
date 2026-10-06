@@ -14,19 +14,15 @@ import { COLORS, brl, kg } from "../lib/tema";
  * vendas do período, com a mesma regra do DRE — pedido cancelado e
  * bonificação ficam de fora.
  *
- * CVC e Carvalho Cruz (quem emite a nota) não se misturam: cada empresa tem as próprias metas e
- * o realizado de cada uma só conta os produtos dela (produto.empresa). O
- * Consolidado soma as duas — metas e realizado — e é só de leitura.
+ * As metas são da CVC.
  */
 
 const EMPRESAS_META = [
   { valor: "cvc", rotulo: "CVC" },
-  { valor: "carvalho_cruz", rotulo: "Carvalho Cruz" },
-  { valor: "consolidado", rotulo: "Consolidado" },
 ];
 const EMPRESAS_REAIS = EMPRESAS_META.filter((e) => e.valor !== "consolidado").map((e) => e.valor);
 const nomeEmpresa = (e) => EMPRESAS_META.find((x) => x.valor === e)?.rotulo ?? "";
-const empresaDaMeta = (m) => (m.empresa === "carvalho_cruz" ? "carvalho_cruz" : EMPRESA_PADRAO);
+const empresaDaMeta = () => EMPRESA_PADRAO;
 
 const PERIODOS = [
   { valor: "diaria", rotulo: "Diária" },
@@ -328,7 +324,7 @@ const EditarMetas = ({ empresa, periodo, frutas, vigentes, setDados, onClose }) 
 // ─── Tela ───────────────────────────────────────────────────────────────────
 
 const Metas = ({ dados, setDados, frutas }) => {
-  const [empresa, setEmpresa] = useState(EMPRESA_PADRAO);
+  const empresa = EMPRESA_PADRAO;
   const [periodo, setPeriodo] = useState("mensal");
   const [ref, setRef] = useState(hojeISO());
   const [editando, setEditando] = useState(false);
@@ -364,10 +360,6 @@ const Metas = ({ dados, setDados, frutas }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       <Card style={{ padding: 18, display: "flex", flexDirection: "column", gap: 14 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: COLORS.cinza }}>Empresa</span>
-          <FiltroPills opcoes={EMPRESAS_META} selecionado={empresa} aoSelecionar={setEmpresa} />
-        </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <FiltroPills
             opcoes={PERIODOS}
@@ -401,7 +393,7 @@ const Metas = ({ dados, setDados, frutas }) => {
       )}
 
       <div>
-        <h3 style={{ margin: "0 0 12px", color: COLORS.cinzaEscuro, fontSize: 16 }}>{consolidado ? "Geral — CVC + Carvalho Cruz" : `Geral — ${nomeEmpresa(empresa)}`}</h3>
+        <h3 style={{ margin: "0 0 12px", color: COLORS.cinzaEscuro, fontSize: 16 }}>{consolidado ? "Geral — CVC" : `Geral — ${nomeEmpresa(empresa)}`}</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
           {INDICADORES.map((ind) => (
             <CartaoMeta key={ind.valor} indicador={ind} realizado={geral[ind.valor]} meta={metaDe(ind.valor)} fracao={fracao} />

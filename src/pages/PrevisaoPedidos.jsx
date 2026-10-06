@@ -93,8 +93,8 @@ function textoAlerta(c) {
 function linkWhatsapp(c, reconquista = false) {
   const tel = soDigitos(c.loja?.telefone || c.rede?.telefone || "");
   const texto = reconquista || !c.esperado
-    ? `Olá! Aqui é da Carvalho Cruz. Faz tempo que não atendemos a ${c.nome} e sentimos sua falta. Podemos conversar sobre preço e entrega para voltar a fornecer?`
-    : `Olá! Aqui é da Carvalho Cruz. Sentimos falta do pedido de ${nomeDoDia(c.esperado)} (${formatarData(c.esperado).slice(0, 5)}) da ${c.nome}. Vai precisar de mercadoria?`;
+    ? `Olá! Aqui é da CVC. Faz tempo que não atendemos a ${c.nome} e sentimos sua falta. Podemos conversar sobre preço e entrega para voltar a fornecer?`
+    : `Olá! Aqui é da CVC. Sentimos falta do pedido de ${nomeDoDia(c.esperado)} (${formatarData(c.esperado).slice(0, 5)}) da ${c.nome}. Vai precisar de mercadoria?`;
   return `https://wa.me/${tel ? (tel.length <= 11 ? `55${tel}` : tel) : ""}?text=${encodeURIComponent(texto)}`;
 }
 

@@ -27,7 +27,7 @@ const Campo = ({ rotulo, children }) => (
  * da fruta: escolher a rede enxuga a lista de clientes.
  */
 export function BarraFiltros({
-  dados, filtros, setFiltros, limpar, intervalo, campos, meses = [], frutas = [], categorias = [], empresas = [],
+  dados, filtros, setFiltros, limpar, intervalo, campos, meses = [], frutas = [], categorias = [],
 }) {
   const tem = (c) => campos.includes(c);
   const mudar = (campo) => (e) => {
@@ -94,11 +94,6 @@ export function BarraFiltros({
         {tem("agrupar") && (
           <Campo rotulo="Ver">
             <Select value={filtros.agrupar} onChange={mudar("agrupar")} options={AGRUPAMENTOS} />
-          </Campo>
-        )}
-        {tem("empresa") && (
-          <Campo rotulo="Empresa">
-            <Select value={filtros.empresa} onChange={mudar("empresa")} options={[{ value: "", label: "Todas as empresas" }, ...empresas]} />
           </Campo>
         )}
         {tem("rede") && (

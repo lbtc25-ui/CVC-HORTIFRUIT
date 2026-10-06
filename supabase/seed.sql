@@ -101,7 +101,6 @@ insert into public.lojas (id, rede_id, nome, cidade, telefone, status, criado_em
 on conflict (id) do nothing;
 
 insert into public.fornecedores (id, nome, telefone, produto, cidade, status, criado_em) values
-  ('f1000000-0000-4000-8000-000000000001', 'Carvalho Cruz', null, 'Laranja pera e abóbora', 'Aracaju-SE', 'ativo', '2026-09-15T09:00:00.000Z'),
   ('f1000000-0000-4000-8000-000000000002', 'FB', null, 'Laranja lima', 'Aracaju-SE', 'ativo', '2026-09-15T09:00:00.000Z')
 on conflict (id) do nothing;
 

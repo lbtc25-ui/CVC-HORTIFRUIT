@@ -19,7 +19,7 @@ import { COLECOES, lerFila, lerMeta, lerTodasColecoes } from "./db";
 import { paraDB } from "./mappers";
 import { url as urlSupabase } from "./supabase";
 
-const TIPO_ARQUIVO = "resgate-carvalho-cruz";
+const TIPO_ARQUIVO = "resgate-cvc";
 const TAMANHO_LOTE = 200;
 
 /**

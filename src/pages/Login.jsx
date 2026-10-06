@@ -112,7 +112,7 @@ export default function Login() {
           )}
 
           <Input label="E-mail" type="email" value={form.email} onChange={campo("email")}
-            placeholder="voce@carvalhocruz.com.br" autoComplete="username" autoCapitalize="none"
+            placeholder="voce@empresa.com.br" autoComplete="username" autoCapitalize="none"
             spellCheck={false} required autoFocus />
 
           {tela !== "recuperar" && (

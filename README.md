@@ -4,29 +4,16 @@ Sistema da **CVC**, derivado do sistema da Distribuidora Carvalho Cruz (mesmos
 módulos: vendas, clientes, compras, estoque, financeiro, fiscal, entregas,
 promotores e folha), mas **separado**: banco Supabase, usuários e deploy próprios.
 
-## Como a CVC se relaciona com a Carvalho Cruz
+## Emissão de notas
 
-Enquanto a CVC é recém-criada, parte das notas ainda sai pelo CNPJ da Carvalho
-Cruz. O app emite NF-e por **duas contas da Spedy**:
-
-| Variável (Vercel)          | Conta                          |
-| -------------------------- | ------------------------------ |
-| `SPEDY_API_KEY`            | CVC (emitente padrão)          |
-| `SPEDY_API_KEY_CARVALHO`   | Carvalho Cruz                  |
-
-O emitente vem do campo **Empresa que emite a nota** do produto (`cvc` ou
-`carvalho_cruz`). Todo produto tem estoque, venha a nota por onde vier; a
-CVC carrega as despesas, e a Carvalho Cruz só aparece como emitente.
-Uma nota sai por um CNPJ só: venda com produtos dos dois emitentes é recusada
-com aviso para dividir em dois pedidos. Devoluções saem pelo mesmo emitente da
-venda; consultas/DANFE/XML de notas antigas tentam a conta da CVC e, em 404, a
-da Carvalho (`api/spedy.js`).
+O app emite NF-e por **uma conta da Spedy** (`SPEDY_API_KEY` na Vercel). Toda
+nota sai pela CVC, com CFOP 5.102 (revenda); a CVC compra e vende.
 
 ## Pendente (a combinar)
 
 - Banco novo: rodar `supabase/instalar.sql` num projeto Supabase da CVC e
   **não** importar os dados da Carvalho (`importacao-*.sql`, `correcao-*.sql`).
-- Rodar `supabase/migracao-68-cvc-empresa-padrao.sql` no banco da CVC (uma vez só).
+- Rodar `supabase/migracao-69-tudo-cvc.sql` no banco da CVC (empresa única 'cvc' e CFOP 5.102). Não rode a 68.
 - Recuperação de notas canceladas (`recuperarCanceladasSpedy`) lê só a conta da CVC.
 
 ---

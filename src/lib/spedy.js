@@ -154,8 +154,7 @@ const CST_PIS_COFINS_SEM_ALIQUOTA = ["04", "05", "06", "07", "08", "09"];
 
 /**
  * A tributação do item, tirada do cadastro do produto (migracao-28). Os
- * produtos de produção própria da Carvalho Cruz sem nada cadastrado ficam com
- * a de sempre (CST 40 / 07 / 07); revenda (CVC) precisa da dela.
+ * produtos sem nada cadastrado são recusados: a CVC precisa do CST de cada um.
  */
 export function tributacaoDoProduto(produto) {
   const legado = false; // na CVC todo produto precisa do CST cadastrado
@@ -479,24 +478,9 @@ export async function aguardarAutorizacao(id, emitente) {
  * autorização da SEFAZ. É essa função que o botão "Emitir NF-e" na tela de
  * Vendas chama (no lugar de emitirNfeParaVenda do src/lib/omie.js).
  */
-/**
- * Quem emite a nota: a CVC (padrão) ou a Carvalho Cruz, conforme a empresa
- * dos produtos. Uma nota sai por um CNPJ só — venda com produtos dos dois
- * emitentes precisa ser dividida em duas.
- */
-export function emitenteDaVenda(venda, produtosPorId) {
-  const emitentes = new Set(
-    (venda.itens ?? [])
-      .filter((i) => i.natureza !== "bonificacao")
-      .map((i) => (produtosPorId[i.produtoId]?.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc"))
-  );
-  if (emitentes.size > 1) {
-    throw new Error(
-      "Esta venda mistura produtos faturados pela CVC e pela Carvalho Cruz. " +
-      "Divida em dois pedidos (um por emitente) para emitir as notas."
-    );
-  }
-  return [...emitentes][0] ?? "cvc";
+/** Quem emite a nota: sempre a CVC (uma conta Spedy só). */
+export function emitenteDaVenda() {
+  return "cvc";
 }
 
 export async function emitirNfeParaVenda({ venda, loja, produtosPorId }) {

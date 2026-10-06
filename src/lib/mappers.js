@@ -185,7 +185,7 @@ const produtoParaDB = (p) => {
     fruta: p.fruta ?? "Laranja Pera",
     // Por qual empresa o produto é vendido: produção própria e revenda não se
     // misturam no DRE. Ver migracao-27-empresa-produto.sql.
-    empresa: p.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc",
+    empresa: "cvc",
     unidade_venda: p.unidadeVenda ?? "kg",
     kg_por_unidade: p.unidadeVenda === "saco" ? num(p.kgPorUnidade, 1) : 1,
     // Peso de uma caixa da fruta (migracao-64); vazio = não cadastrado.
@@ -215,7 +215,7 @@ const produtoDoDB = (r) => {
     id: r.id,
     nome: r.nome,
     fruta: r.fruta ?? "Laranja Pera",
-    empresa: r.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc",
+    empresa: "cvc",
     unidadeVenda: r.unidade_venda ?? "kg",
     kgPorUnidade: num(r.kg_por_unidade, 1),
     kgPorCaixa: Number(r.kg_por_caixa) > 0 ? Number(r.kg_por_caixa) : null,
@@ -799,7 +799,7 @@ const precoProdutoDoDB = (r) => ({
 const metaParaDB = (m) => ({
   id: m.id,
   // Carvalho Cruz e CVC têm metas separadas (migracao-47).
-  empresa: m.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc",
+  empresa: "cvc",
   periodo: m.periodo,
   indicador: m.indicador,
   fruta: m.fruta || null,
@@ -810,7 +810,7 @@ const metaParaDB = (m) => ({
 
 const metaDoDB = (r) => ({
   id: r.id,
-  empresa: r.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc",
+  empresa: "cvc",
   periodo: r.periodo,
   indicador: r.indicador,
   fruta: r.fruta ?? "",

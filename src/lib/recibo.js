@@ -2,7 +2,8 @@
  * Recibo de pedido — documento SEM valor fiscal, para as redes que recebem um
  * recibo a cada entrega da semana e uma única NF-e no fim, juntando tudo (ver
  * lib/notaSemanal.js). Feito com o mesmo jsPDF já usado no romaneio e nas
- * exportações da tela de Vendas — import dinâmico, só paga o peso quem clica.
+ * exportações da tela de Vendas — import { EMPRESA } from "./empresa";
+import dinâmico, só paga o peso quem clica.
  */
 import { brl, kg } from "./tema";
 
@@ -48,16 +49,19 @@ export async function gerarReciboPdf({ venda, loja, rede, produtosPorId }) {
 
   // Mesma proporção do PNG usada no componente Logo (src/components/Logo.jsx).
   const logoAltura = 22;
-  const logoLargura = logo ? logoAltura * (333 / 384) : 0;
+  const logoLargura = logo ? logoAltura * (437 / 384) : 0;
   const inicioTexto = logo ? margemEsq + logoLargura + 8 : margemEsq;
   if (logo) doc.addImage(logo, "PNG", margemEsq, 10, logoLargura, logoAltura);
 
   doc.setFontSize(15);
   doc.setTextColor(30);
-  doc.text("CVC Hortifruit", inicioTexto, 18);
+  doc.text(EMPRESA.razaoSocial, inicioTexto, 18);
   doc.setFontSize(11.5);
   doc.setTextColor(90);
   doc.text("Recibo de pedido — não é documento fiscal", inicioTexto, 25);
+  doc.setFontSize(8.5);
+  doc.setTextColor(120);
+  doc.text(`CNPJ ${EMPRESA.cnpj} · IE ${EMPRESA.inscricaoEstadual} · ${EMPRESA.telefone}`, inicioTexto, 30);
 
   let y = Math.max(10 + logoAltura, 32) + 6;
   doc.setDrawColor(220);
@@ -143,7 +147,7 @@ export async function gerarReciboPdf({ venda, loja, rede, produtosPorId }) {
   y += 5;
   doc.setFontSize(9);
   doc.setTextColor(60);
-  doc.text("CVC Hortifruit", xEsq, y);
+  doc.text(EMPRESA.razaoSocial, xEsq, y);
   doc.text("Responsável pelo estabelecimento", xDir, y);
 
   doc.save(`recibo-pedido-${venda.numero ?? venda.id}.pdf`);

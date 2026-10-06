@@ -3,7 +3,8 @@
  * dados já carregados no app. Nada sai para um servidor: o arquivo nasce e
  * baixa no próprio aparelho.
  *
- * As bibliotecas entram por import dinâmico — só quem clica em "Exportar"
+ * As bibliotecas entram por import { EMPRESA } from "./empresa";
+import dinâmico — só quem clica em "Exportar"
  * paga o peso delas no download; o resto do app nem carrega.
  *
  * Sobre o pacote `xlsx` (SheetJS): o npm mostra um aviso de segurança alto
@@ -50,7 +51,7 @@ export async function exportarPdf(nomeArquivo, titulo, tabelas) {
   doc.text(titulo, 14, 16);
   doc.setFontSize(9.5);
   doc.setTextColor(130);
-  doc.text(`CVC Hortifruit · gerado em ${new Date().toLocaleDateString("pt-BR")}`, 14, 22);
+  doc.text(`${EMPRESA.razaoSocial} · CNPJ ${EMPRESA.cnpj} · gerado em ${new Date().toLocaleDateString("pt-BR")}`, 14, 22);
 
   let y = 30;
   for (const { titulo: subtitulo, colunas, linhas } of tabelas) {
@@ -114,7 +115,7 @@ export async function exportarRomaneioPdf({ veiculo, motorista, data, paradas, v
   const desenharCabecalho = () => {
     doc.setFontSize(15);
     doc.setTextColor(30);
-    doc.text("CVC Hortifruit", margemEsq, 16);
+    doc.text(EMPRESA.nomeNoApp, margemEsq, 16);
     doc.setFontSize(10);
     doc.setTextColor(90);
     // `atualizado` = hora em que a rota mexida gerou este papel de novo, pra o

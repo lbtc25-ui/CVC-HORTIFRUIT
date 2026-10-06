@@ -1,3 +1,4 @@
+import { EMPRESA } from "./lib/empresa";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Badge, Btn, Card, FiltroPills, Icon, Input, Modal, Select, StatCard, TabelaRolavel } from "./components/ui";
@@ -1020,7 +1021,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
       ["Quilos vendidos", kg(acumulado.kg), COLORS.cinzaEscuro, "Soma dos kg dos itens vendidos no período."],
       ["Quilos bonificados", kg(acumulado.kgBonificado), COLORS.cinzaEscuro, "Kg dados como bonificação nos pedidos do período."],
       ["Preço médio / kg", brl(acumulado.precoMedio), COLORS.verde, "Receita ÷ quilos vendidos."],
-      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da Carvalho Cruz ÷ kg vendidos pela empresa no período."],
+      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da CVC ÷ kg vendidos pela empresa no período."],
       ["Custo médio total / kg", brl(custoTotalKg), COLORS.laranjaEscuro, "(Fruta + custo da operação) ÷ quilos vendidos. Soma o custo médio da fruta com o custo da operação por kg."],
       ["Custo operação rateado", brl(acumulado.custoOperacao), COLORS.laranjaEscuro, "Kg vendidos no recorte × custo operação / kg."],
       ["Taxas dos clientes", brl(acumulado.taxas), COLORS.laranjaEscuro, "Caixas IFCO, taxa de CD, taxa de antecipação e outras, cadastradas na rede ou loja."],
@@ -1038,7 +1039,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
       ["Quilos bonificados", kg(acumulado.kgBonificado), COLORS.cinzaEscuro, "Kg dados como bonificação nos pedidos do período."],
       ["Preço médio / kg", brl(acumulado.precoMedio), COLORS.verde, "Receita ÷ quilos vendidos."],
       ["Custo médio / kg", brl(acumulado.custoMedio), COLORS.laranjaEscuro, "Mercadoria comprada ÷ kg comprados no período (média ponderada pelo peso)."],
-      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da Carvalho Cruz ÷ kg vendidos pela empresa no período."],
+      ["Custo operação / kg", brl(acumulado.custoOperacaoKg), COLORS.laranjaEscuro, "Despesas, combustível e folha da CVC ÷ kg vendidos pela empresa no período."],
       ["Custo médio total / kg", brl(custoTotalKg), COLORS.laranjaEscuro, "(Fruta + custo da operação) ÷ quilos vendidos. Soma o custo médio da fruta com o custo da operação por kg."],
     ];
 
@@ -1581,8 +1582,8 @@ const LinkDePedido = ({ loja, rede, produtos, setDados, daRede = false }) => {
   if (!supabaseConfigurado) return null;
 
   const mensagem = daRede
-    ? `Olá! Este é o link para fazer os pedidos das lojas ${rede.nome} com a Carvalho Cruz. Dá para pedir para várias lojas de uma vez:\n${link}`
-    : `Olá! Este é o link para fazer os pedidos da ${rede?.nome ?? ""} ${loja.nome} com a Carvalho Cruz:\n${link}`;
+    ? `Olá! Este é o link para fazer os pedidos das lojas ${rede.nome} com a CVC. Dá para pedir para várias lojas de uma vez:\n${link}`
+    : `Olá! Este é o link para fazer os pedidos da ${rede?.nome ?? ""} ${loja.nome} com a CVC:\n${link}`;
   const telefone = soDigitos((daRede ? rede?.telefone : loja.telefone || rede?.telefone) || "");
   const whatsapp = `https://wa.me/${telefone ? (telefone.length <= 11 ? `55${telefone}` : telefone) : ""}?text=${encodeURIComponent(mensagem)}`;
 
@@ -3612,7 +3613,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
               <div>
                 <div style={{ fontWeight: 700, fontSize: 13.5, color: COLORS.cinzaEscuro }}>Dados da nota fiscal</div>
                 <div style={{ fontSize: 12, color: COLORS.cinza, lineHeight: 1.5, marginTop: 2 }}>
-                  Confirme com o contador. Produção própria da Carvalho Cruz: CFOP 5.101. Revenda (CVC): 5.102.
+                  Confirme com o contador. Revenda: CFOP 5.102. Produção própria: 5.101.
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -4949,7 +4950,7 @@ const horaDe = (iso) => (iso ? new Date(iso).toLocaleTimeString("pt-BR", { hour:
 
 /** De onde toda entrega sai — fixo como origem no link do Maps, em vez de
  * depender de onde o celular do motorista estiver no momento de abrir. */
-const ENDERECO_CD = "Av. Tiradentes, 659, América, Aracaju-SE, 49082-600";
+const ENDERECO_CD = EMPRESA.endereco;
 
 // Geocodificado uma vez só (é sempre o mesmo endereço) e guardado aqui —
 // fora do componente pra sobreviver a re-renders sem pedir de novo ao
@@ -9408,7 +9409,7 @@ export default function AppCarvalhoCruz() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: trilho ? "center" : "flex-start", gap: 11 }}>
             <LogoSelo tamanho={trilho ? 40 : 42} />
             {!trilho && <div>
-              <div style={{ color: COLORS.branco, fontWeight: 800, fontSize: 13, lineHeight: 1.2, letterSpacing: 0.3 }}>Carvalho Cruz</div>
+              <div style={{ color: COLORS.branco, fontWeight: 800, fontSize: 13, lineHeight: 1.2, letterSpacing: 0.3 }}>CVC Hortifruit</div>
               <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10 }}>Hortifruits • Aracaju-SE</div>
             </div>}
           </div>

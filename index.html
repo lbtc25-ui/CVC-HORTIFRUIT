@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>CVC Hortifruit — Gestão</title>
+    <meta
+      name="description"
+      content="Sistema de gestão da CVC Hortifruit, distribuidora de hortifrútis — vendas, clientes, fornecedores, estoque e financeiro. Aracaju/SE."
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta name="theme-color" content="#2D6A4F" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--
+      "black-translucent" desenha o conteúdo por baixo da barra de status do
+      iPhone (pra dar o efeito imersivo) — mas isso ativa um bug conhecido do
+      WebKit no modo standalone (app instalado na Tela de Início): a faixa do
+      topo (barra de status + um pouco além) para de repassar toques pra
+      página, mesmo mostrando o conteúdo certinho ali. No Safari normal não
+      acontece porque a barra de endereço já reserva esse espaço, então só
+      aparece quem instala o app. Como o cabeçalho já é branco, "default"
+      (barra sólida, sem sobrepor o conteúdo) resolve sem mudar o visual.
+    -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="CVC Hortifruit" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .abertura {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: #fafaf7;
+      }
+      .abertura img {
+        max-width: 60vw;
+        height: auto;
+        animation: abertura-surgir 0.5s ease-out both;
+      }
+      @keyframes abertura-surgir {
+        from { opacity: 0; transform: scale(0.96); }
+        to   { opacity: 1; transform: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .abertura img { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Abertura: enquanto o bundle baixa, o #root já mostra a logo em vez de uma
+      tela branca. O React limpa este conteúdo quando monta — é só o primeiro
+      quadro, e combina com o <Carregando /> que vem logo depois.
+    -->
+    <div id="root">
+      <div class="abertura">
+        <img
+          src="/logo-carvalho-cruz.png"
+          width="242"
+          height="279"
+          alt="Carvalho Cruz — da nossa fazenda para sua mesa"
+        />
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

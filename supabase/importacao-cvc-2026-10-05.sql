@@ -110,6 +110,9 @@ insert into public.fornecedores (id, nome, status)
   select '5742fb70-6e1c-4775-82ad-586dd09a48ad', 'LEANDRO', 'ativo'
   where not exists (select 1 from public.fornecedores where lower(nome) = lower('LEANDRO'));
 insert into public.fornecedores (id, nome, status)
+  select '973ff1fa-ab2e-4e18-8a6c-4efdd1d09b74', 'LILIAN', 'ativo'
+  where not exists (select 1 from public.fornecedores where lower(nome) = lower('LILIAN'));
+insert into public.fornecedores (id, nome, status)
   select '407c901a-47f4-4adf-866c-b8d33e80267c', 'LUIS EDUARDO', 'ativo'
   where not exists (select 1 from public.fornecedores where lower(nome) = lower('LUIS EDUARDO'));
 insert into public.fornecedores (id, nome, status)
@@ -124,6 +127,9 @@ insert into public.fornecedores (id, nome, status)
 insert into public.fornecedores (id, nome, status)
   select 'e686ff81-cc2a-448b-8ae4-7f64663fea2c', 'MASCARENHAS (AVF)', 'ativo'
   where not exists (select 1 from public.fornecedores where lower(nome) = lower('MASCARENHAS (AVF)'));
+insert into public.fornecedores (id, nome, status)
+  select 'd12ee65c-cea6-4ac9-85cd-c0bfe853d5a0', 'RODRIGO', 'ativo'
+  where not exists (select 1 from public.fornecedores where lower(nome) = lower('RODRIGO'));
 insert into public.fornecedores (id, nome, status)
   select 'fcf72a4a-2dc7-4914-806e-19847a6a205a', 'SANDOVAL', 'ativo'
   where not exists (select 1 from public.fornecedores where lower(nome) = lower('SANDOVAL'));
@@ -235,12 +241,32 @@ insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, o
          'Melancia', 4800, 1.1823, 'WhatsApp — entrega Atakarejo 08/09 (800 un x 6 kg)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select 'bb8a2d44-5f9b-4d22-8211-f912e4d6b1b1', '2026-09-08', (select id from public.fornecedores where lower(nome) = lower('LUIS EDUARDO') order by criado_em limit 1),
+         'Tangerina Ponkan', 200, 3.6000, 'WhatsApp — 8 cx; kg ESTIMADO (8 cx x 25 kg)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select 'aca8d986-266d-4f96-8753-023fa5bef037', '2026-09-10', (select id from public.fornecedores where lower(nome) = lower('JPJS') order by criado_em limit 1),
          'Melancia', 600, 2.5000, 'WhatsApp — NF 17352 — melancia grande a R$ 15,00 (100 un x 6 kg)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '0fcc6b6f-65b5-4366-85e5-0555923d4cc6', '2026-09-10', (select id from public.fornecedores where lower(nome) = lower('GPE') order by criado_em limit 1),
          'Tangerina Murcote', 1150, 2.0000, 'Planilha'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select 'a90a15c0-4a8e-4e85-8758-6424244a5bde', '2026-09-10', (select id from public.fornecedores where lower(nome) = lower('JPJS') order by criado_em limit 1),
+         'Tangerina Ponkan', 50, 3.5200, 'WhatsApp — NF 17352, 2 cx a R$ 88; kg ESTIMADO (25 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '0e2eef87-26e3-47ab-8925-ea57618328ca', '2026-09-11', (select id from public.fornecedores where lower(nome) = lower('RODRIGO') order by criado_em limit 1),
+         'Tangerina Murcote', 200, 3.5000, 'WhatsApp — 10 cx; kg ESTIMADO (20 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '04d43ee4-6f47-4991-8cf2-bf06ff1aa68a', '2026-09-11', (select id from public.fornecedores where lower(nome) = lower('JPJS') order by criado_em limit 1),
+         'Tangerina Ponkan', 225, 3.5200, 'WhatsApp — NF 17430, 9 cx a R$ 88; kg ESTIMADO (25 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '5a669dff-8817-4070-8cb2-93aebb9074f3', '2026-09-11', (select id from public.fornecedores where lower(nome) = lower('LUIS EDUARDO') order by criado_em limit 1),
+         'Tangerina Ponkan', 150, 3.6000, 'WhatsApp — 6 cx pagas pelo Xande (AVF); kg ESTIMADO (25 kg/cx)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '3bd43da1-6c1f-433a-8be3-3e82ea77d2cc', '2026-09-12', (select id from public.fornecedores where lower(nome) = lower('JOSÉ DAVID') order by criado_em limit 1),
@@ -251,8 +277,20 @@ insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, o
          'Melancia', 2520, 2.5000, 'WhatsApp — NF 17519 — melancia grande a R$ 15,00 (420 un x 6 kg)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select 'b1290541-ab6c-4e56-8e65-f41207aafddf', '2026-09-12', (select id from public.fornecedores where lower(nome) = lower('JPJS') order by criado_em limit 1),
+         'Tangerina Ponkan', 425, 3.5200, 'WhatsApp — NF 17519, 17 cx a R$ 88; kg ESTIMADO (25 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '20cad34d-e36e-48bb-8587-d23ae04721b4', '2026-09-14', (select id from public.fornecedores where lower(nome) = lower('LEANDRO') order by criado_em limit 1),
          'Limão', 9937.5, 5.5200, 'Planilha'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '94661b81-043d-4475-86cc-164cb37fa905', '2026-09-15', (select id from public.fornecedores where lower(nome) = lower('JPJS') order by criado_em limit 1),
+         'Tangerina Ponkan', 450, 3.4000, 'WhatsApp — NF 17683, 18 cx a R$ 85; kg ESTIMADO (25 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '953fdc60-c5ca-4133-8461-61d69d648504', '2026-09-15', (select id from public.fornecedores where lower(nome) = lower('LILIAN') order by criado_em limit 1),
+         'Tangerina Ponkan', 150, 3.2000, 'WhatsApp — 6 cx; kg ESTIMADO (25 kg/cx)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '784d1e90-0419-4b81-8355-927edbf5b086', '2026-09-16', (select id from public.fornecedores where lower(nome) = lower('GILBERTO SOBRAL') order by criado_em limit 1),
@@ -273,6 +311,14 @@ insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, o
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '44afa59f-53e6-44f0-89de-6965f475e1ba', '2026-09-19', (select id from public.fornecedores where lower(nome) = lower('GILSON') order by criado_em limit 1),
          'Melancia', 1800, 1.1667, 'WhatsApp — 300 melancias (300 un x 6 kg)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select 'b6f3cba2-d5d7-4ab4-8a63-5337ddfab342', '2026-09-19', (select id from public.fornecedores where lower(nome) = lower('RODRIGO') order by criado_em limit 1),
+         'Tangerina Murcote', 200, 3.0000, 'WhatsApp — 10 cx (comprovante enviado 2x); kg ESTIMADO (20 kg/cx)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '4417a2f9-17be-4ede-8991-1ee8c986d953', '2026-09-19', (select id from public.fornecedores where lower(nome) = lower('LUIS EDUARDO') order by criado_em limit 1),
+         'Tangerina Ponkan', 275, 3.4545, 'WhatsApp — 11 cx; kg ESTIMADO (25 kg/cx)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '35e3080f-a412-428a-809a-31ad09786cdc', '2026-09-21', (select id from public.fornecedores where lower(nome) = lower('MASCARENHAS (AVF)') order by criado_em limit 1),
@@ -353,6 +399,10 @@ insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, o
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select '4fbc2e28-5cd6-4a61-88c1-33882d45c41f', '2026-10-03', (select id from public.fornecedores where lower(nome) = lower('MARCOS ANTONIO') order by criado_em limit 1),
          'Melancia', 4500, 0.9111, 'WhatsApp — 750 melancias (750 un x 6 kg)'
+  on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
+insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
+  select '3b313e1a-1ba9-4170-8ed8-82f961721c3d', '2026-10-03', (select id from public.fornecedores where lower(nome) = lower('RODRIGO') order by criado_em limit 1),
+         'Tangerina Murcote', 580, 3.0000, 'WhatsApp — 29 cx; kg ESTIMADO (20 kg/cx)'
   on conflict (id) do update set peso_kg = excluded.peso_kg, valor_kg = excluded.valor_kg, observacao = excluded.observacao;
 insert into public.compras (id, data, fornecedor_id, fruta, peso_kg, valor_kg, observacao)
   select 'b01f3686-1e8c-4eda-8f0f-30a8f87b8ac9', '2026-10-05', (select id from public.fornecedores where lower(nome) = lower('MASCARENHAS') order by criado_em limit 1),

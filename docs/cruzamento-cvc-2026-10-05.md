@@ -15,7 +15,7 @@ nenhum banco**; rode no Supabase da CVC depois de `instalar.sql` + migração 68
 | | Planilha | WhatsApp (novo) | Total |
 |---|---:|---:|---:|
 | Vendas (40 pedidos / 118 itens) | R$ 213.735,88 | R$ 468,00 | R$ 214.203,88 |
-| Compras (55) | R$ 138.390,95 | R$ 86.087,36 | R$ 224.478,31 |
+| Compras (66) | R$ 138.390,95 | R$ 95.811,36 | R$ 234.202,31 |
 | Despesas (90) | R$ 15.596,23 | R$ 25.068,61 | R$ 40.664,84 |
 | Perdas | abacate 414 kg, goiaba 34 kg | | |
 
@@ -78,15 +78,19 @@ abertura da firma R$ 780, descarga R$ 1.150 …).
 
 ## Ficou de fora — preciso de você
 
-**Compras só em caixas (sem peso → não dá para dar entrada no estoque):**
-pokan 08/09 8 cx R$ 720 · 15/09 6 cx R$ 480 · 19/09 11 cx R$ 950 · 11/09 6 cx
-R$ 540 (pago ao Xande); murcott/primavera 10 cx R$ 700 (11/09) · 10 cx R$ 600
-(19/09; o comprovante foi enviado **duas vezes**, contei uma) · 29 cx R$ 1.740
-(03/10) · 10 cx R$ 750 (05/09) · 3 cx R$ 225 (05/10) · 7 cx tangerina R$ 455
-(01/10) · **mamão 400 cx R$ 22.000 (15/09)** — pode ser a mesma carga dos
-5.605 kg de 21/09? Informe kg/cx de cada.
+**Compras em caixa — entraram com kg ESTIMADO** (o R$ é do comprovante/NF; o
+kg não): pokan 25 kg/cx (a planilha prova: 23 cx = 575 kg) — Luis Eduardo
+08/09 e 19/09, 6 cx pagas pelo Xande 11/09, Lilian 15/09 e as 4 NFs da JPJS
+com pokan (46 cx); Murcott 20 kg/cx (IFCO da planilha: 444 kg = 20 cx) —
+Rodrigo 11/09, 19/09 (o comprovante veio **duas vezes**; contei uma) e 03/10.
+Todos têm "kg ESTIMADO" na observação da compra. Corrija o kg real quando souber.
 
-**Notas da JPJS (CC compra e a CVC revende) — valores por caixa, sem peso:**
+**Continuam fora (não dá nem para estimar):** tangerina "primavera" 10 cx
+R$ 750 (05/09), 3 cx R$ 225 (05/10), 7 cx R$ 455 (01/10) — Murcott ou pokan? ·
+**mamão 400 cx R$ 22.000 (15/09)**: a 5.605 kg o preço seria R$ 3,92/kg, o dobro
+dos R$ 2,00 das outras cargas; pode ser outra coisa.
+
+**Notas da JPJS — itens que continuam sem peso (manga, pera, pinha, coco, tangerina fresca):**
 
 | NF | Data | Total | Itens |
 |---|---|---:|---|
@@ -109,7 +113,11 @@ está na planilha; os R$ 2.230 não achei de qual fruta.
 - **Atakarejo, 30/09 (R$ 8.385 + R$ 2.795 = R$ 11.180, "Limão")** e
   **05/10 (cupom de 100 cx limão Thaiti, R$ 11.180, "2.000 kgs limão")**: nos dois
   a *origem* é a Carvalho Cruz e o destino é o Atakarejo. Foi venda, compra ou
-  devolução/desconto? Não lancei. Se é venda, falta o cliente na planilha.
+  devolução/desconto? Não lancei. Leitura mais provável: **compra** — no grupo,
+  legenda "N kgs/cxs <fruta>" com comprovante é sempre pagamento de mercadoria,
+  e a Pix de 30/09 (1.500 + 500 kg a R$ 5,59) e o cupom de 05/10 (100 cx, 2.000
+  kg, com o CNPJ da CVC como consumidor) somam os mesmos R$ 11.180. Se for isso,
+  são R$ 22.360 de compra de limão a lançar. Confirme.
 - Vendas de maracujá R$ 200 a Eduardo (4 cx, 19/08, "segunda") e linha de
   maracujá AVF/Diversos "A RECEBER" sem valor (19/09).
 - Frete R$ 362,29 (Posto Caio Bá, 19/08) — lancei como combustível.
@@ -136,6 +144,15 @@ faltam vendas da AVF na planilha, ou o Xande pagou outras coisas da CVC pela AVF
 (ex.: mamão R$ 11.210 + R$ 648/1.260/1.404/1.512 que ele recebeu como compra, a
 Pix de R$ 23.730 de 13/08 e R$ 16.883,80 de 15/09). Vale conferir esses dois
 Pix grandes. O app ainda **não tem tela** para isso (só a consulta acima).
+
+## Vendas da CVC que já estão no sistema da Carvalho
+
+O DRE do sistema da Carvalho mostra a CVC com R$ 31.379,20 (4.077,6 kg) em
+setembro e R$ 38.374,71 (4.150 kg) em outubro, e **zero de compras**. Essas
+vendas são pedidos com NF-e da CVC e **não estão na carga** (a planilha só tem
+as vendas do Atakarejo por cupom e as da AVF/CC). Para a CVC começar do zero
+no sistema novo, falta exportar esses pedidos (data, cliente/loja, produto, kg,
+total, status, NF) e migrar junto; assim a carga não duplica nem perde nada.
 
 ## Para rodar
 

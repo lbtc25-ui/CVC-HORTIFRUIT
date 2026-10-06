@@ -84,6 +84,20 @@ COMPRAS_WA = [
     ("2026-09-05", "SUELY", "Goiaba", 75, 270.00, "3 cx entregues em 05/09"),
     ("2026-09-19", "SUELY", "Goiaba", 350, 1235.00, "14 cx"),
     ("2026-10-03", "KLEBER", "Goiaba", 900, 3350.00, "36 cx"),
+    # ── Caixas com peso ESTIMADO (valor em R$ é do comprovante/NF; o kg não) ──
+    # Pokan: a planilha prova 25 kg/cx (23 cx = 575 kg do Luis Eduardo).
+    ("2026-09-08", "LUIS EDUARDO", "Tangerina Ponkan", 200, 720.00, "8 cx; kg ESTIMADO (8 cx x 25 kg)"),
+    ("2026-09-10", "JPJS", "Tangerina Ponkan", 50, 176.00, "NF 17352, 2 cx a R$ 88; kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-11", "JPJS", "Tangerina Ponkan", 225, 792.00, "NF 17430, 9 cx a R$ 88; kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-11", "LUIS EDUARDO", "Tangerina Ponkan", 150, 540.00, "6 cx pagas pelo Xande (AVF); kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-12", "JPJS", "Tangerina Ponkan", 425, 1496.00, "NF 17519, 17 cx a R$ 88; kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-15", "LILIAN", "Tangerina Ponkan", 150, 480.00, "6 cx; kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-15", "JPJS", "Tangerina Ponkan", 450, 1530.00, "NF 17683, 18 cx a R$ 85; kg ESTIMADO (25 kg/cx)"),
+    ("2026-09-19", "LUIS EDUARDO", "Tangerina Ponkan", 275, 950.00, "11 cx; kg ESTIMADO (25 kg/cx)"),
+    # Murcott: ~20 kg/cx (IFCO da planilha: 444 kg = 20 cx, 322 kg = 16 cx).
+    ("2026-09-11", "RODRIGO", "Tangerina Murcote", 200, 700.00, "10 cx; kg ESTIMADO (20 kg/cx)"),
+    ("2026-09-19", "RODRIGO", "Tangerina Murcote", 200, 600.00, "10 cx (comprovante enviado 2x); kg ESTIMADO (20 kg/cx)"),
+    ("2026-10-03", "RODRIGO", "Tangerina Murcote", 580, 1740.00, "29 cx; kg ESTIMADO (20 kg/cx)"),
 ]
 # melancia: (data, fornecedor, unidades, total, obs)
 MELANCIA_WA = [

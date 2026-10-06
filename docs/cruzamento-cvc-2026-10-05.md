@@ -15,7 +15,7 @@ nenhum banco**; rode no Supabase da CVC depois de `instalar.sql` + migração 68
 | | Planilha | WhatsApp (novo) | Total |
 |---|---:|---:|---:|
 | Vendas (40 pedidos / 118 itens) | R$ 213.735,88 | R$ 468,00 | R$ 214.203,88 |
-| Compras (66) | R$ 138.390,95 | R$ 95.811,36 | R$ 234.202,31 |
+| Compras (69) | R$ 138.390,95 | R$ 118.171,36 | R$ 256.562,31 |
 | Despesas (90) | R$ 15.596,23 | R$ 25.068,61 | R$ 40.664,84 |
 | Perdas | abacate 414 kg, goiaba 34 kg | | |
 
@@ -110,14 +110,7 @@ Pagos por boleto/Pix: 668,10 · 3.044,00 · 875,68 · 1.839,60 · 2.701,98 ·
 está na planilha; os R$ 2.230 não achei de qual fruta.
 
 **Pagamentos sem destino claro:**
-- **Atakarejo, 30/09 (R$ 8.385 + R$ 2.795 = R$ 11.180, "Limão")** e
-  **05/10 (cupom de 100 cx limão Thaiti, R$ 11.180, "2.000 kgs limão")**: nos dois
-  a *origem* é a Carvalho Cruz e o destino é o Atakarejo. Foi venda, compra ou
-  devolução/desconto? Não lancei. Leitura mais provável: **compra** — no grupo,
-  legenda "N kgs/cxs <fruta>" com comprovante é sempre pagamento de mercadoria,
-  e a Pix de 30/09 (1.500 + 500 kg a R$ 5,59) e o cupom de 05/10 (100 cx, 2.000
-  kg, com o CNPJ da CVC como consumidor) somam os mesmos R$ 11.180. Se for isso,
-  são R$ 22.360 de compra de limão a lançar. Confirme.
+- **Atakarejo, 30/09 (R$ 8.385 + R$ 2.795) e 05/10 (R$ 11.180, cupom 13939):** confirmado — são **compras** de limão no Atakarejo, 2.000 kg a R$ 5,59 cada vez (R$ 22.360). Já estão na carga.
 - Vendas de maracujá R$ 200 a Eduardo (4 cx, 19/08, "segunda") e linha de
   maracujá AVF/Diversos "A RECEBER" sem valor (19/09).
 - Frete R$ 362,29 (Posto Caio Bá, 19/08) — lancei como combustível.

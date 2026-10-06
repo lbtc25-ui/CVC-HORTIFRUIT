@@ -84,6 +84,10 @@ COMPRAS_WA = [
     ("2026-09-05", "SUELY", "Goiaba", 75, 270.00, "3 cx entregues em 05/09"),
     ("2026-09-19", "SUELY", "Goiaba", 350, 1235.00, "14 cx"),
     ("2026-10-03", "KLEBER", "Goiaba", 900, 3350.00, "36 cx"),
+    # Limão comprado NO Atakarejo (confirmado): R$ 5,59/kg
+    ("2026-09-30", "ATAKAREJO", "Limão", 1500, 8385.00, "Pix 30/09 — 1.500 kg a R$ 5,59"),
+    ("2026-09-30", "ATAKAREJO", "Limão", 500, 2795.00, "Pix 30/09 — 500 kg a R$ 5,59"),
+    ("2026-10-05", "ATAKAREJO", "Limão", 2000, 11180.00, "Pix 05/10 — 100 cx, 2.000 kg a R$ 5,59 (cupom 13939)"),
     # ── Caixas com peso ESTIMADO (valor em R$ é do comprovante/NF; o kg não) ──
     # Pokan: a planilha prova 25 kg/cx (23 cx = 575 kg do Luis Eduardo).
     ("2026-09-08", "LUIS EDUARDO", "Tangerina Ponkan", 200, 720.00, "8 cx; kg ESTIMADO (8 cx x 25 kg)"),

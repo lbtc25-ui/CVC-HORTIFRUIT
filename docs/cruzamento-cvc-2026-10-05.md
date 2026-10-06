@@ -121,22 +121,21 @@ R$ 800 / R$ 278,20 de 11/08.
 
 ## Repasses para a CVC (migração 69)
 
-Vendas da planilha por quem recebeu (as de CVC não existem na planilha):
+Confirmado: **Safra → Nu = Carvalho Cruz pagando a CVC** e **Pix do Xande =
+AVF pagando a CVC**. Saldo = vendas pagas recebidas pela conta − repasses
+(`select * from vw_repasse_conta`):
 
-| Recebedor | Pago (já na conta dele) | A receber | Repasses lançados (sentido a confirmar) |
-|---|---:|---:|---:|
-| Carvalho Cruz | R$ 136.515,49 | R$ 33.701,19 | R$ 126.382,41 (Safra → Nu) |
-| AVF | R$ 43.519,20 | — | R$ 79.367,50 (Pix do Xande → Nu da CC) |
+| Conta | Vendas pagas | Repassado à CVC | **Saldo a repassar** | Ainda a receber (vendas pendentes) |
+|---|---:|---:|---:|---:|
+| Carvalho Cruz | R$ 136.515,49 | R$ 126.382,41 (11 transf.) | **R$ 10.133,08** | R$ 33.701,19 |
+| AVF | R$ 43.519,20 | R$ 79.367,50 (12 Pix) | **− R$ 35.848,30** | — |
 
-O sistema calcula `a_repassar = vendas pagas − repasses para a CVC + repasses
-da CVC` em `vw_repasse_conta`. **Os 23 comprovantes de transferência entre contas
-entraram como "a confirmar" e ficam fora do saldo**, porque nos comprovantes o
-destino é sempre o Nu da Carvalho Cruz (inclusive os do Xande), então não dá
-para saber só pelo comprovante se foi a conta repassando à CVC ou a CVC
-reembolsando a CC por pagamentos que ela fez (JPJS, ICMS etc.). Se me disser o
-sentido de cada grupo (ex.: "Safra → Nu = CVC reembolsando a CC"), eu fecho o
-saldo. No app ainda **não há tela** para isso: é consulta
-(`select * from vw_repasse_conta`) até criarmos a tela.
+Leitura: a CC deve R$ 10.133,08 e ainda tem R$ 33.701,19 de vendas a receber.
+A AVF aparece com R$ 35.848,30 a mais repassado do que vendeu na planilha — ou
+faltam vendas da AVF na planilha, ou o Xande pagou outras coisas da CVC pela AVF
+(ex.: mamão R$ 11.210 + R$ 648/1.260/1.404/1.512 que ele recebeu como compra, a
+Pix de R$ 23.730 de 13/08 e R$ 16.883,80 de 15/09). Vale conferir esses dois
+Pix grandes. O app ainda **não tem tela** para isso (só a consulta acima).
 
 ## Para rodar
 

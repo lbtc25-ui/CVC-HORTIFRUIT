@@ -601,75 +601,75 @@ insert into public.vendas (id, numero, loja_id, data, prazo_dias, itens, total, 
   where lower(r.nome) = lower('ATAKAREJO') and lower(l.nome) = lower('MATRIZ')
   on conflict (id) do update set itens = excluded.itens, total = excluded.total, kg_total = excluded.kg_total, status = excluded.status, recebedor = excluded.recebedor;
 
--- Repasses entre as contas e a CVC (sentido a confirmar; ver migração 69)
+-- Repasses das contas CC/AVF para a CVC (ver migração 69)
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('f160df1c-f833-4ccd-8a48-fbc7e3146c03', '2026-08-13', 'avf', 'a_confirmar', 23730.00, 'Pix Xande → CC')
+  values ('f160df1c-f833-4ccd-8a48-fbc7e3146c03', '2026-08-13', 'avf', 'para_cvc', 23730.00, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('5a9ba9bf-1cd6-4ab5-80df-ee8653e66987', '2026-08-17', 'avf', 'a_confirmar', 4200.00, 'Pix Xande → CC (limão AVF 1.050 kg)')
+  values ('5a9ba9bf-1cd6-4ab5-80df-ee8653e66987', '2026-08-17', 'avf', 'para_cvc', 4200.00, 'Pix Xande → CC (limão AVF 1.050 kg)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('8f512367-366b-4234-8f9d-05e52f5a4cdc', '2026-08-19', 'avf', 'a_confirmar', 2400.00, 'Pix Xande → CC (limão AVF 600 kg)')
+  values ('8f512367-366b-4234-8f9d-05e52f5a4cdc', '2026-08-19', 'avf', 'para_cvc', 2400.00, 'Pix Xande → CC (limão AVF 600 kg)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('d1ae63e0-d04c-46da-8afd-300436366a4a', '2026-09-01', 'avf', 'a_confirmar', 7795.20, 'Pix Xande → CC (limão CD Mix 2.000 kg)')
+  values ('d1ae63e0-d04c-46da-8afd-300436366a4a', '2026-09-01', 'avf', 'para_cvc', 7795.20, 'Pix Xande → CC (limão CD Mix 2.000 kg)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('f4e43b2b-c59d-4515-890f-b7980b1be041', '2026-09-15', 'avf', 'a_confirmar', 16883.80, 'Pix Xande → CC')
+  values ('f4e43b2b-c59d-4515-890f-b7980b1be041', '2026-09-15', 'avf', 'para_cvc', 16883.80, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('b7dad614-78d4-4010-8052-bb6e930e7ef2', '2026-09-17', 'avf', 'a_confirmar', 1259.00, 'Pix Xande → CC')
+  values ('b7dad614-78d4-4010-8052-bb6e930e7ef2', '2026-09-17', 'avf', 'para_cvc', 1259.00, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('9754201c-e546-4169-8600-754f56c3b313', '2026-09-17', 'avf', 'a_confirmar', 945.00, 'Pix Xande → CC (comprovante enviado nos dois grupos)')
+  values ('9754201c-e546-4169-8600-754f56c3b313', '2026-09-17', 'avf', 'para_cvc', 945.00, 'Pix Xande → CC (comprovante enviado nos dois grupos)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('93f70a9a-8788-4aac-88a5-0a4dd9d8ee5b', '2026-09-19', 'avf', 'a_confirmar', 9720.00, 'Pix Xande → CC (limão Rodrigo)')
+  values ('93f70a9a-8788-4aac-88a5-0a4dd9d8ee5b', '2026-09-19', 'avf', 'para_cvc', 9720.00, 'Pix Xande → CC (limão Rodrigo)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('176d0a6a-0a96-4d52-8db2-97e040499702', '2026-09-19', 'avf', 'a_confirmar', 280.00, 'Pix Xande → CC')
+  values ('176d0a6a-0a96-4d52-8db2-97e040499702', '2026-09-19', 'avf', 'para_cvc', 280.00, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('9a256232-b671-4b50-857f-ce1d94163436', '2026-09-22', 'avf', 'a_confirmar', 10800.00, 'Pix Xande → CC (limão Mix)')
+  values ('9a256232-b671-4b50-857f-ce1d94163436', '2026-09-22', 'avf', 'para_cvc', 10800.00, 'Pix Xande → CC (limão Mix)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('30caf945-f526-41df-8d6a-040ea4fd9ffc', '2026-09-25', 'avf', 'a_confirmar', 546.00, 'Pix Xande → CC')
+  values ('30caf945-f526-41df-8d6a-040ea4fd9ffc', '2026-09-25', 'avf', 'para_cvc', 546.00, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('fb963714-7b20-43d2-8197-d3f6d6acd450', '2026-10-03', 'avf', 'a_confirmar', 808.50, 'Pix Xande → CC')
+  values ('fb963714-7b20-43d2-8197-d3f6d6acd450', '2026-10-03', 'avf', 'para_cvc', 808.50, 'Pix Xande → CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('d4df267d-4575-440c-8c04-2969f3272361', '2026-08-19', 'carvalho_cruz', 'a_confirmar', 2464.43, 'Safra → Nu: mercadorias da semana passada Atakarejo')
+  values ('d4df267d-4575-440c-8c04-2969f3272361', '2026-08-19', 'carvalho_cruz', 'para_cvc', 2464.43, 'Safra → Nu: mercadorias da semana passada Atakarejo')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('9f7fa928-ff88-47bf-8e3f-9d1cd19b7461', '2026-08-21', 'carvalho_cruz', 'a_confirmar', 326.00, 'Safra → Nu: frutas JPJS da Carvalho Cruz')
+  values ('9f7fa928-ff88-47bf-8e3f-9d1cd19b7461', '2026-08-21', 'carvalho_cruz', 'para_cvc', 326.00, 'Safra → Nu: frutas JPJS da Carvalho Cruz')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('daa46c07-8b4a-4976-8bcb-e6fd8dc4b18d', '2026-08-21', 'carvalho_cruz', 'a_confirmar', 5254.86, 'Safra → Nu: venda Atakarejo terça-feira')
+  values ('daa46c07-8b4a-4976-8bcb-e6fd8dc4b18d', '2026-08-21', 'carvalho_cruz', 'para_cvc', 5254.86, 'Safra → Nu: venda Atakarejo terça-feira')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('8d0847f3-3db6-42c6-8760-eb74a468d6a4', '2026-08-21', 'carvalho_cruz', 'a_confirmar', 3493.00, 'Safra → Nu: vendas de limão, ponkan, piemonte e pera d''Anjou')
+  values ('8d0847f3-3db6-42c6-8760-eb74a468d6a4', '2026-08-21', 'carvalho_cruz', 'para_cvc', 3493.00, 'Safra → Nu: vendas de limão, ponkan, piemonte e pera d''Anjou')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('a1a22f6f-268f-4459-8c81-1fc5bcdf4a53', '2026-09-14', 'carvalho_cruz', 'a_confirmar', 16000.00, 'Safra → Nu: Dinheiro CVC')
+  values ('a1a22f6f-268f-4459-8c81-1fc5bcdf4a53', '2026-09-14', 'carvalho_cruz', 'para_cvc', 16000.00, 'Safra → Nu: Dinheiro CVC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('f20d7bfb-ff39-482d-862c-ee81a9275dba', '2026-09-14', 'carvalho_cruz', 'a_confirmar', 4000.00, 'Safra → Nu: Dinheiro CVC')
+  values ('f20d7bfb-ff39-482d-862c-ee81a9275dba', '2026-09-14', 'carvalho_cruz', 'para_cvc', 4000.00, 'Safra → Nu: Dinheiro CVC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('e91ece42-6fdc-4e69-85fd-23284a8938be', '2026-09-16', 'carvalho_cruz', 'a_confirmar', 4000.00, 'Safra → Nu: Dinheiro CVC CC')
+  values ('e91ece42-6fdc-4e69-85fd-23284a8938be', '2026-09-16', 'carvalho_cruz', 'para_cvc', 4000.00, 'Safra → Nu: Dinheiro CVC CC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('910fa6cc-5c54-4c49-8c07-6101b6e0b24e', '2026-09-17', 'carvalho_cruz', 'a_confirmar', 10097.29, 'Safra → Nu: Dinheiro CVC (Carvalho Cruz zerada)')
+  values ('910fa6cc-5c54-4c49-8c07-6101b6e0b24e', '2026-09-17', 'carvalho_cruz', 'para_cvc', 10097.29, 'Safra → Nu: Dinheiro CVC (Carvalho Cruz zerada)')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('c25eb7c9-cab0-4c57-8ce7-ef3d2f160271', '2026-09-23', 'carvalho_cruz', 'a_confirmar', 46574.17, 'Safra → Nu: Mercadorias CVC')
+  values ('c25eb7c9-cab0-4c57-8ce7-ef3d2f160271', '2026-09-23', 'carvalho_cruz', 'para_cvc', 46574.17, 'Safra → Nu: Mercadorias CVC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('86b7193d-3ad5-47f7-8648-ee46cee8c84d', '2026-09-25', 'carvalho_cruz', 'a_confirmar', 10446.43, 'Safra → Nu: Vendas CVC quinta')
+  values ('86b7193d-3ad5-47f7-8648-ee46cee8c84d', '2026-09-25', 'carvalho_cruz', 'para_cvc', 10446.43, 'Safra → Nu: Vendas CVC quinta')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 insert into public.repasses (id, data, conta, sentido, valor, descricao)
-  values ('433f043f-a280-420b-8c0e-186703939f46', '2026-10-01', 'carvalho_cruz', 'a_confirmar', 23726.23, 'Safra → Nu: Pagamento mercadorias CVC')
+  values ('433f043f-a280-420b-8c0e-186703939f46', '2026-10-01', 'carvalho_cruz', 'para_cvc', 23726.23, 'Safra → Nu: Pagamento mercadorias CVC')
   on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;
 
 -- Perdas

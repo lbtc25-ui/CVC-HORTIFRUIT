@@ -142,7 +142,7 @@ DESPESAS_WA = [
 
 
 # ─── Repasses (comprovantes de dinheiro entre contas) ───────────────────────
-# Sentido ainda não confirmado → 'a_confirmar' (fica fora do saldo).
+# Confirmado pelo Carlinhos/Lucas: Safra → Nu = CC pagando a CVC; Pix do Xande = AVF pagando a CVC.
 # (data, conta, valor, descrição)
 REPASSES_WA = [
     # Pix do Xande (BTG, AVF) para a conta Nu da Carvalho Cruz
@@ -388,11 +388,11 @@ def main():
         p("  on conflict (id) do update set itens = excluded.itens, total = excluded.total, kg_total = excluded.kg_total, status = excluded.status, recebedor = excluded.recebedor;")
     p("")
 
-    p("-- Repasses entre as contas e a CVC (sentido a confirmar; ver migração 69)")
+    p("-- Repasses das contas CC/AVF para a CVC (ver migração 69)")
     for d, conta, v, desc in REPASSES_WA:
         rid = uuid_de("repasse-cvc", d, conta, v)
         p("insert into public.repasses (id, data, conta, sentido, valor, descricao)")
-        p(f"  values ({q(rid)}, {q(d)}, {q(conta)}, 'a_confirmar', {v:.2f}, {q(desc)})")
+        p(f"  values ({q(rid)}, {q(d)}, {q(conta)}, 'para_cvc', {v:.2f}, {q(desc)})")
         p("  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;")
     p("")
 

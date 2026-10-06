@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "icones": "node scripts/gerar-icones.mjs",
     "seed:sql": "node scripts/gerar-seed-sql.mjs",
-    "test": "node --test src/lib/sped/sped.test.mjs src/lib/comprovanteTexto.test.mjs src/lib/arquivoMorto.test.mjs src/lib/notas.test.mjs src/lib/taxas.test.mjs"
+    "test": "node --test src/lib/sped/sped.test.mjs src/lib/comprovanteTexto.test.mjs src/lib/arquivoMorto.test.mjs src/lib/notas.test.mjs src/lib/taxas.test.mjs src/lib/planilhaFrutas.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

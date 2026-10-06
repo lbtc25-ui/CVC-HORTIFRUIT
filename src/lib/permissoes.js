@@ -48,7 +48,7 @@ export const rotuloPapel = (papel) => PAPEIS[papel]?.label ?? "Sem papel";
  * combustível) seguem o mesmo alcance de "financeiro": os dois papéis lançam.
  */
 const ABAS = {
-  socio_master: ["dashboard", "vendas", "romaneio", "notas", "clientes", "previsao", "compras", "despesas", "combustivel", "folha", "fornecedores", "estoque", "financeiro", "cobranca", "promotores", "painelTv", "metas", "arquivo", "sincronizacao", "usuarios"],
+  socio_master: ["dashboard", "vendas", "romaneio", "notas", "clientes", "previsao", "compras", "frutas", "despesas", "combustivel", "folha", "fornecedores", "estoque", "financeiro", "cobranca", "promotores", "painelTv", "metas", "arquivo", "sincronizacao", "usuarios"],
   assistente_administrativo: ["dashboard", "vendas", "romaneio", "notas", "clientes", "previsao", "despesas", "combustivel", "folha", "fornecedores", "estoque", "financeiro", "cobranca", "promotores", "painelTv", "sincronizacao"],
   // O promotor só enxerga a própria rota — nada de venda, cliente, estoque
   // ou financeiro, nem a fila de sincronização geral do resto do app.
@@ -75,7 +75,7 @@ export const podeExcluir = (papel) => papel === "socio_master";
 /** Nome de cada aba, como aparece na barra lateral. */
 export const ROTULO_ABA = {
   dashboard: "Painel", vendas: "Vendas", romaneio: "Romaneio", notas: "Notas Fiscais",
-  clientes: "Clientes", previsao: "Previsão de Pedidos", compras: "Compras", despesas: "Despesas", combustivel: "Combustível",
+  clientes: "Clientes", previsao: "Previsão de Pedidos", compras: "Compras", frutas: "Frutas", despesas: "Despesas", combustivel: "Combustível",
   folha: "Folha de Pagamento", fornecedores: "Fornecedores", estoque: "Estoque",
   financeiro: "Financeiro", cobranca: "Cobrança", promotores: "Promotores", painelTv: "Painel TV", metas: "Metas", arquivo: "Arquivo morto",
   minharota: "Minha Rota", minhaentrega: "Minhas Entregas", sincronizacao: "Sincronização", usuarios: "Usuários",

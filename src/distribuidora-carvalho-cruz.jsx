@@ -62,6 +62,7 @@ import MinhaRota from "./pages/MinhaRota";
 import MinhasEntregas from "./pages/MinhasEntregas";
 import NotasFiscais from "./pages/NotasFiscais";
 import PainelTV from "./pages/PainelTV";
+import PlanilhaFrutas from "./pages/PlanilhaFrutas";
 import PrevisaoPedidos from "./pages/PrevisaoPedidos";
 import Promotores from "./pages/Promotores";
 import ArquivoMorto from "./pages/ArquivoMorto";
@@ -9178,6 +9179,7 @@ const TODAS_ABAS = [
   { id: "clientes", label: "Clientes", icon: "clientes" },
   { id: "previsao", label: "Previsão de Pedidos", icon: "alert" },
   { id: "compras", label: "Compras", icon: "fornecedores" },
+  { id: "frutas", label: "Frutas", icon: "leaf" },
   { id: "despesas", label: "Despesas", icon: "financeiro" },
   { id: "combustivel", label: "Combustível", icon: "combustivel" },
   { id: "folha", label: "Folha de Pagamento", icon: "folha" },
@@ -9517,6 +9519,7 @@ export default function AppCarvalhoCruz() {
             {aba === "clientes" && <Clientes dados={dados} setDados={setDados} podeRemover={podeApagar} />}
             {aba === "previsao" && <PrevisaoPedidos dados={dados} setDados={setDados} />}
             {aba === "compras" && <Compras dados={dados} setDados={setDados} />}
+            {aba === "frutas" && <PlanilhaFrutas dados={dados} setDados={setDados} />}
             {aba === "despesas" && <Despesas dados={dados} setDados={setDados} caixa={caixa} aoMudarCaixa={() => setVersaoCaixa((v) => v + 1)} lancarAgora={lancarAgora} aoLancar={() => setLancarAgora(null)} />}
             {aba === "combustivel" && <Combustivel dados={dados} setDados={setDados} podeGerir={gestor} />}
             {aba === "folha" && <FolhaPagamento dados={dados} setDados={setDados} podeGerir={gestor} podeRemover={podeApagar} />}

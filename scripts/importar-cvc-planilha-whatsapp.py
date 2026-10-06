@@ -192,6 +192,18 @@ REPASSES_WA = [
 RECEBEDOR = {"CC": "carvalho_cruz", "AVF": "avf"}  # vendedor = conta que recebe
 
 
+# Despesa do WhatsApp que é de uma fruta só (aparece na tela Frutas, aba da fruta).
+FRUTA_DA_DESCRICAO = [
+    ("mamão", "Mamão Havaí"), ("redinha", "Mamão Havaí"), ("murcott", "Tangerina Murcote"),
+    ("melancia", "Melancia"), ("maracujá", "Maracujá"), ("limão", "Limão"),
+]
+
+
+def fruta_da_descricao(desc):
+    d = desc.lower()
+    return next((f for chave, f in FRUTA_DA_DESCRICAO if chave in d), "")
+
+
 def uuid_de(*partes):
     h = hashlib.sha1("|".join(str(p) for p in partes).encode()).hexdigest()
     return f"{h[:8]}-{h[8:12]}-4{h[13:16]}-8{h[17:20]}-{h[20:32]}"
@@ -292,7 +304,7 @@ def ler_planilha(caminho):
                 cat = "Fretes" if desc.startswith("FRETE") else "Outros"
                 despesas.append(dict(data=d, categoria=cat,
                                      descricao=f"{desc or 'Despesa'} — {fruta}", valor=c2(v),
-                                     fonte="Planilha"))
+                                     fruta=fruta, fonte="Planilha"))
     # DESPESAS gerais
     ws = wb["DESPESAS"]
     for r in range(4, ws.max_row + 1):
@@ -322,7 +334,8 @@ def main():
                             valor_kg=tot / kg, total=tot, obs=f"WhatsApp — {obs} ({un} un x {PESO_MELANCIA:g} kg)",
                             fonte="WhatsApp"))
     for d, cat, desc, v in DESPESAS_WA:
-        despesas.append(dict(data=d, categoria=cat, descricao=desc, valor=v, fonte="WhatsApp"))
+        despesas.append(dict(data=d, categoria=cat, descricao=desc, valor=v,
+                             fruta=fruta_da_descricao(desc), fonte="WhatsApp"))
 
     # melancia: o sistema controla estoque em kg (6 kg por unidade, migração 66)
     for v in vendas:
@@ -344,7 +357,7 @@ def main():
     p("--  Carga CVC — planilha CVC COMPRA E VENDA x grupos de WhatsApp (até 05/10/2026)")
     p("--  GERADO por scripts/importar-cvc-planilha-whatsapp.py — não edite à mão.")
     p("--")
-    p("--  Rode DEPOIS de instalar.sql, da migração 68 e da 69 (recebedor/repasses). Idempotente: os ids")
+    p("--  Rode DEPOIS de instalar.sql e das migrações 68, 69 (recebedor/repasses) e 70 (despesa por fruta). Idempotente: os ids")
     p("--  vêm do conteúdo, rodar de novo atualiza em vez de duplicar.")
     p("--  O que ficou de fora e as divergências: docs/cruzamento-cvc-2026-10-05.md")
     p("-- ============================================================================")
@@ -425,9 +438,9 @@ def main():
     p("-- Despesas")
     for d in sorted(despesas, key=lambda x: (x["data"], x["descricao"])):
         did = uuid_de("despesa-cvc", d["data"], d["categoria"], d["descricao"], d["valor"])
-        p("insert into public.despesas (id, data, categoria, descricao, valor)")
-        p(f"  values ({q(did)}, {q(d['data'])}, {q(d['categoria'])}, {q(d['descricao'])}, {d['valor']:.2f})")
-        p("  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;")
+        p("insert into public.despesas (id, data, categoria, descricao, valor, fruta)")
+        p(f"  values ({q(did)}, {q(d['data'])}, {q(d['categoria'])}, {q(d['descricao'])}, {d['valor']:.2f}, {q(d.get('fruta') or None)})")
+        p("  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;")
     p("")
     p("commit;")
     p("")

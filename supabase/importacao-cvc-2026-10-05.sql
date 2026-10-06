@@ -2,7 +2,7 @@
 --  Carga CVC — planilha CVC COMPRA E VENDA x grupos de WhatsApp (até 05/10/2026)
 --  GERADO por scripts/importar-cvc-planilha-whatsapp.py — não edite à mão.
 --
---  Rode DEPOIS de instalar.sql, da migração 68 e da 69 (recebedor/repasses). Idempotente: os ids
+--  Rode DEPOIS de instalar.sql e das migrações 68, 69 (recebedor/repasses) e 70 (despesa por fruta). Idempotente: os ids
 --  vêm do conteúdo, rodar de novo atualiza em vez de duplicar.
 --  O que ficou de fora e as divergências: docs/cruzamento-cvc-2026-10-05.md
 -- ============================================================================
@@ -746,276 +746,276 @@ insert into public.perdas (id, data, fruta, kg, custo_kg, motivo)
   on conflict (id) do update set kg = excluded.kg, custo_kg = excluded.custo_kg;
 
 -- Despesas
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('1fabf8cd-81ce-4555-84df-58ef632af712', '2026-08-10', 'Outros', 'Carrego camera fria', 300.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('1e8038d3-ece1-4525-8e18-f2f36bfd5f2a', '2026-08-11', 'Fretes', 'FRETE — Limão', 1521.65)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('e60104a7-9008-493c-8b31-3c1fdf61f849', '2026-08-11', 'Fretes', 'FRETE — Limão', 800.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('d6142a35-11c3-49c4-8b84-ca0993cd2e93', '2026-08-11', 'Fretes', 'FRETE — Tangerina Olé', 278.20)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('4d16d1ce-cef5-41ac-8ae4-0fa2609c29a6', '2026-08-14', 'Manutenção', 'Enxada', 80.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('25a0bf7a-abb9-4f59-8a9c-3e95b7f2b018', '2026-08-14', 'Outros', 'Limpeza sala', 320.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('fef4560c-a7a4-417b-85ec-62f877de3846', '2026-08-15', 'Outros', 'Limpeza cd', 150.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('f9621657-abaf-4122-871e-0a68e494d691', '2026-08-17', 'Outros', 'Almoco', 80.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('1bba89a8-51d8-4459-8e14-1fadbd85aba5', '2026-08-17', 'Outros', 'Detetizacao', 244.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('19911761-4226-4fd9-8bc5-3bcefd4767be', '2026-08-18', 'Diaristas', 'Triagem mercadoria', 200.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('4660185d-4ce2-4e89-89c5-cd2b7f989de7', '2026-08-19', 'Fretes', 'FRETE — Tangerina Ponkan', 255.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2cf7961e-be2f-4479-80ca-fd5c218a9aff', '2026-08-19', 'Combustíveis', 'Frete — Posto Caio Bá II', 362.29)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2f08077e-5580-4000-8402-97b770bd581f', '2026-08-21', 'Outros', 'IFCO — Abacate', 150.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('67949aa9-93ed-41a1-866d-2ee948a53949', '2026-08-21', 'Outros', 'IFCO — Goiaba', 42.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('8266cd2b-0b70-461b-8b99-c2ce84a1a9cd', '2026-08-21', 'Outros', 'IFCO — Maracujá', 327.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('d6fb2b14-00a9-4f34-8aca-03828184acbb', '2026-08-21', 'Outros', 'IFCO — Maracujá', 104.64)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('4401fb4f-37ce-42d4-818f-5f4791f3ca30', '2026-08-21', 'Outros', 'IFCO — Tangerina Ponkan', 80.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('95a926bc-784d-45d6-81e6-a0df5c7f9b60', '2026-08-22', 'Combustíveis', 'Combustível: buscar maracujá em Lagarto → Aracaju', 130.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('e3fa9343-3b29-49b9-88a9-70ed09abbaaa', '2026-08-22', 'Fretes', 'FRETE — Maracujá', 130.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('36d10ecb-8983-407d-8d08-bbb8eff107d0', '2026-08-22', 'Diaristas', 'Triagem mercadoria', 120.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('7695fe60-b808-43c8-8654-4ef55e465655', '2026-08-25', 'Combustíveis', 'Diesel ssa', 164.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('afd94434-2eb9-4af4-8e7b-31767e7f2037', '2026-08-30', 'Outros', 'IFCO — Goiaba', 127.53)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('a86cea3e-2db7-464d-889b-aa56ae521661', '2026-08-30', 'Outros', 'IFCO — Tangerina Ponkan', 104.64)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('e6ddd99d-5a39-40db-8c27-daf9b3291bf0', '2026-09-01', 'Outros', 'Abertura da firma CVC (Lázaro Carvalho Assessoria)', 780.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2f967410-4f51-4496-8de9-29debbc6e92e', '2026-09-02', 'Outros', 'IFCO — Coco Seco', 3.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('894b232b-1f84-4080-885a-708e8d13ba1d', '2026-09-02', 'Outros', 'IFCO — Goiaba', 42.51)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('cd8c857e-ef07-44eb-8e42-0b0ed5c3bd82', '2026-09-02', 'Outros', 'IFCO — Manga Tommy Atkins', 45.78)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('46072740-b56d-4d0e-86f3-b627d86b657a', '2026-09-02', 'Outros', 'IFCO — Tangerina Ponkan', 39.24)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('94537a46-8667-42f7-82ab-6ad2845a086d', '2026-09-03', 'Outros', 'IFCO — Coco Seco', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('5bd62677-597e-4e92-8515-ce167da9b0e0', '2026-09-03', 'Outros', 'IFCO — Goiaba', 35.97)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('32eee9fb-8600-4162-8df1-debc5a67ee7e', '2026-09-03', 'Outros', 'IFCO — Manga Tommy Atkins', 13.08)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('5ea6247c-98fd-4888-8f31-e41449b33144', '2026-09-03', 'Outros', 'IFCO — Tangerina Ponkan', 26.16)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('e91370c4-1b3f-483b-80f7-de0bd8c8d400', '2026-09-05', 'Outros', 'IFCO — Coco Seco', 6.54)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('a58efe9e-96de-4adc-8abe-918ff772e6ce', '2026-09-05', 'Outros', 'IFCO — Goiaba', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('592ead3f-ed3a-453d-8cba-b03960ead041', '2026-09-05', 'Outros', 'IFCO — Manga Tommy Atkins', 35.12)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('cc688996-5c92-42ef-8978-083f13a46056', '2026-09-08', 'Outros', 'IFCO — Coco Seco', 6.54)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('279c9411-bd32-4629-848e-cd109ce52f57', '2026-09-08', 'Outros', 'IFCO — Manga Tommy Atkins', 65.40)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('c50ec5b3-9e08-4838-8f02-28ff935a6555', '2026-09-08', 'Outros', 'IFCO — Pinha', 6.54)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('e8c2b25c-8b7f-4faa-8603-375f2d5f64ac', '2026-09-08', 'Outros', 'IFCO — Tangerina Ponkan', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('35f1c0af-3138-4205-80a7-7ef965088358', '2026-09-09', 'Fretes', 'Frete melancia (Josilene)', 1250.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('76a4d3ad-6f79-43c2-88ac-12ef70d78460', '2026-09-10', 'Outros', 'IFCO — Coco Seco', 6.54)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('5aa7e8e2-df89-44bd-89da-6d8fdbacbaf0', '2026-09-10', 'Outros', 'IFCO — Manga Tommy Atkins', 16.35)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('856e9f27-381e-40f9-8755-ca8dec44c630', '2026-09-10', 'Outros', 'IFCO — Tangerina Ponkan', 6.54)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('36aafd99-6d27-4fb0-82dc-8c14874b322d', '2026-09-11', 'Outros', 'Descarga (Armazém Mateus)', 1150.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('0caf3257-9aff-4a24-8c51-9e8f16ca325e', '2026-09-11', 'Fretes', 'Frete: buscar tangerina W. Murcott em Neópolis', 350.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('c301871c-8a72-47fe-8339-7cd3dbf4c965', '2026-09-12', 'Fretes', 'Frete redinhas', 140.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('7c93661e-8d55-432c-81c1-5e08df976728', '2026-09-12', 'Outros', 'IFCO — Manga Tommy Atkins', 55.59)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('025fd05f-f8ee-4a22-8240-3219582e71f0', '2026-09-12', 'Outros', 'IFCO — Tangerina Murcote', 65.40)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('f797aa82-8a35-4f2a-8bcd-663faea3143b', '2026-09-12', 'Outros', 'IFCO — Tangerina Ponkan', 55.59)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('a9fbdf7c-f10c-497c-8576-e6cfcc795717', '2026-09-12', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('6444802d-adeb-40e1-8b9a-3ae7c240cc01', '2026-09-14', 'Outros', 'Almoço (Churrascaria Netto e Prestes)', 61.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2ecba7f8-d45d-433b-8700-c42b7ab2fa8a', '2026-09-14', 'Outros', 'Encarregado mamão — bonificação', 200.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('36b76692-21d6-4da8-8057-701f41cb49aa', '2026-09-14', 'Impostos', 'ICMS mês 08 (SEFAZ-SE)', 2788.92)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('807d94c2-da25-41d1-8e19-25439d2034b4', '2026-09-14', 'Outros', 'Jantar (iFood)', 112.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('80a660e6-945d-4ee2-824a-800ce8bd1145', '2026-09-15', 'Outros', 'IFCO — Goiaba', 19.62)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('af5530c1-daef-4ae1-8537-fef5b0011081', '2026-09-15', 'Outros', 'IFCO — Tangerina Murcote', 52.32)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('de2f395f-92f7-4bc2-800a-a1d70be9c7e2', '2026-09-15', 'Outros', 'IFCO — Tangerina Ponkan', 55.59)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('261e22f1-0b54-43a5-825e-4df6688221e4', '2026-09-17', 'Diaristas', 'Descarrego limão (Márcio)', 450.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2a884b21-d045-4880-8cc4-224bfdfeed36', '2026-09-17', 'Fretes', 'FRETE — Limão', 8560.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('787400f6-7d76-4c9a-8aa8-cb28eecc6292', '2026-09-17', 'Outros', 'IFCO — Goiaba', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('abb6f66d-c69b-4614-85e2-327f74fe517c', '2026-09-17', 'Outros', 'IFCO — Tangerina Ponkan', 19.62)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('c24efb1c-1d74-417c-8262-d16b6888b390', '2026-09-19', 'Diaristas', '2 diaristas carregando mamão', 400.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('b99666e3-dc95-4825-8ef8-62fc8a5b5b29', '2026-09-19', 'Diaristas', '4 diaristas arrumando mamão em Neópolis', 400.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('ddbdd8d4-14de-40be-82c9-b8e447fc7e7a', '2026-09-19', 'Combustíveis', 'Combustível Lagarto → Neópolis (carregamento)', 220.12)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('bd99ba0d-1663-416f-8d91-1bfa9c86fc6e', '2026-09-19', 'Fretes', 'Frete redinha mamão', 140.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('0700a239-cf34-4f6b-8726-6d295e6c7d19', '2026-09-19', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('446f74fb-ee40-4e53-8c84-6498b863a6cf', '2026-09-22', 'Outros', 'Despesa — Maracujá', 281.22)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('b5ebc06e-28a4-4849-8a45-468be6d2d206', '2026-09-22', 'Outros', 'IFCO — Manga Espada', 16.35)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('89deb241-c1cc-4d23-80d8-31381c89120f', '2026-09-22', 'Outros', 'IFCO — Tangerina Ponkan', 3.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('1eb9980d-1af2-4468-863a-9c3f472f4a6a', '2026-09-24', 'Outros', 'IFCO — Mamão Havaí', 39.24)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('268e4d2b-06fc-4f9c-8a41-4b180c979509', '2026-09-24', 'Outros', 'IFCO — Manga Espada', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('3cdc0399-6c25-452e-8d92-0e5cf9662b38', '2026-09-24', 'Outros', 'IFCO — Maracujá', 186.39)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('515704c6-18f0-4643-8ef6-e9179f0657f3', '2026-09-26', 'Diaristas', 'Ajudantes para o Atakarejo (Márcio)', 200.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('80695624-1b8b-43a1-86b3-659e9372fbe0', '2026-09-26', 'Outros', 'IFCO — Coco Seco', 3.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('72318fe6-4958-4950-848f-460319f57ac1', '2026-09-26', 'Outros', 'IFCO — Mamão Havaí', 29.43)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('d0937e9a-4525-415b-8092-3cb9159ac344', '2026-09-29', 'Combustíveis', 'Combustível', 150.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('f839ca76-81e1-438a-8406-dd15d686db23', '2026-09-29', 'Outros', 'IFCO — Coco Seco', 3.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('63aa9bd2-3a83-48a6-8db7-6bbe3fcbf573', '2026-09-29', 'Outros', 'IFCO — Goiaba', 39.24)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('370d1ba7-bd8f-403f-83ae-e446e086f48e', '2026-09-29', 'Outros', 'IFCO — Mamão Havaí', 55.59)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('2f7ea886-8d8a-416a-8efb-e00fb9ba0286', '2026-09-29', 'Outros', 'IFCO — Manga Espada', 39.24)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('7fecb46f-6394-4122-8731-54e9b74a25cb', '2026-09-29', 'Outros', 'IFCO — Pinha', 9.81)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('a657ffa5-3458-492b-8299-99b96def5951', '2026-09-29', 'Outros', 'IFCO — Tangerina Murcote', 3.27)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('082f69b7-6093-4963-85c3-d6fe8d6272c4', '2026-09-29', 'Outros', 'IFCO — Tangerina Ponkan', 19.62)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('40ed0a83-b5bd-4197-8cb4-1a0a15e546fd', '2026-09-30', 'Diaristas', '2 diaristas e horas extras do Guilherme carregando mamão', 360.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('9df4eb14-2adb-46fb-899f-d1548339b9d9', '2026-09-30', 'Outros', 'Balancão R$ 40 + janta R$ 30 (Guilherme)', 70.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('9f80bb84-d105-4c8d-8722-e49a0d8db9d1', '2026-10-03', 'Diaristas', '2 diárias, 2 cafés da manhã e 2 almoços', 500.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('af7b8281-b993-4222-8f16-9383784dcf32', '2026-10-03', 'Combustíveis', 'Combustível mamão Neópolis (Guilherme)', 166.01)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('8cb23dd2-2a07-4ba6-828d-0a33be3a3a69', '2026-10-05', 'Fretes', 'Frete redinhas', 140.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('a37f1f91-702c-4ae9-8a38-d5f19b1222f8', '2026-10-05', 'Outros', 'Jantar dos carregadores', 148.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
-insert into public.despesas (id, data, categoria, descricao, valor)
-  values ('d103bbf5-e898-4a10-812d-ca4813284960', '2026-10-05', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00)
-  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('1fabf8cd-81ce-4555-84df-58ef632af712', '2026-08-10', 'Outros', 'Carrego camera fria', 300.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('1e8038d3-ece1-4525-8e18-f2f36bfd5f2a', '2026-08-11', 'Fretes', 'FRETE — Limão', 1521.65, 'Limão')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('e60104a7-9008-493c-8b31-3c1fdf61f849', '2026-08-11', 'Fretes', 'FRETE — Limão', 800.00, 'Limão')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('d6142a35-11c3-49c4-8b84-ca0993cd2e93', '2026-08-11', 'Fretes', 'FRETE — Tangerina Olé', 278.20, 'Tangerina Olé')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('4d16d1ce-cef5-41ac-8ae4-0fa2609c29a6', '2026-08-14', 'Manutenção', 'Enxada', 80.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('25a0bf7a-abb9-4f59-8a9c-3e95b7f2b018', '2026-08-14', 'Outros', 'Limpeza sala', 320.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('fef4560c-a7a4-417b-85ec-62f877de3846', '2026-08-15', 'Outros', 'Limpeza cd', 150.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('f9621657-abaf-4122-871e-0a68e494d691', '2026-08-17', 'Outros', 'Almoco', 80.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('1bba89a8-51d8-4459-8e14-1fadbd85aba5', '2026-08-17', 'Outros', 'Detetizacao', 244.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('19911761-4226-4fd9-8bc5-3bcefd4767be', '2026-08-18', 'Diaristas', 'Triagem mercadoria', 200.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('4660185d-4ce2-4e89-89c5-cd2b7f989de7', '2026-08-19', 'Fretes', 'FRETE — Tangerina Ponkan', 255.00, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2cf7961e-be2f-4479-80ca-fd5c218a9aff', '2026-08-19', 'Combustíveis', 'Frete — Posto Caio Bá II', 362.29, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2f08077e-5580-4000-8402-97b770bd581f', '2026-08-21', 'Outros', 'IFCO — Abacate', 150.00, 'Abacate')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('67949aa9-93ed-41a1-866d-2ee948a53949', '2026-08-21', 'Outros', 'IFCO — Goiaba', 42.00, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('8266cd2b-0b70-461b-8b99-c2ce84a1a9cd', '2026-08-21', 'Outros', 'IFCO — Maracujá', 327.00, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('d6fb2b14-00a9-4f34-8aca-03828184acbb', '2026-08-21', 'Outros', 'IFCO — Maracujá', 104.64, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('4401fb4f-37ce-42d4-818f-5f4791f3ca30', '2026-08-21', 'Outros', 'IFCO — Tangerina Ponkan', 80.00, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('95a926bc-784d-45d6-81e6-a0df5c7f9b60', '2026-08-22', 'Combustíveis', 'Combustível: buscar maracujá em Lagarto → Aracaju', 130.00, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('e3fa9343-3b29-49b9-88a9-70ed09abbaaa', '2026-08-22', 'Fretes', 'FRETE — Maracujá', 130.00, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('36d10ecb-8983-407d-8d08-bbb8eff107d0', '2026-08-22', 'Diaristas', 'Triagem mercadoria', 120.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('7695fe60-b808-43c8-8654-4ef55e465655', '2026-08-25', 'Combustíveis', 'Diesel ssa', 164.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('afd94434-2eb9-4af4-8e7b-31767e7f2037', '2026-08-30', 'Outros', 'IFCO — Goiaba', 127.53, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('a86cea3e-2db7-464d-889b-aa56ae521661', '2026-08-30', 'Outros', 'IFCO — Tangerina Ponkan', 104.64, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('e6ddd99d-5a39-40db-8c27-daf9b3291bf0', '2026-09-01', 'Outros', 'Abertura da firma CVC (Lázaro Carvalho Assessoria)', 780.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2f967410-4f51-4496-8de9-29debbc6e92e', '2026-09-02', 'Outros', 'IFCO — Coco Seco', 3.27, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('894b232b-1f84-4080-885a-708e8d13ba1d', '2026-09-02', 'Outros', 'IFCO — Goiaba', 42.51, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('cd8c857e-ef07-44eb-8e42-0b0ed5c3bd82', '2026-09-02', 'Outros', 'IFCO — Manga Tommy Atkins', 45.78, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('46072740-b56d-4d0e-86f3-b627d86b657a', '2026-09-02', 'Outros', 'IFCO — Tangerina Ponkan', 39.24, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('94537a46-8667-42f7-82ab-6ad2845a086d', '2026-09-03', 'Outros', 'IFCO — Coco Seco', 9.81, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('5bd62677-597e-4e92-8515-ce167da9b0e0', '2026-09-03', 'Outros', 'IFCO — Goiaba', 35.97, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('32eee9fb-8600-4162-8df1-debc5a67ee7e', '2026-09-03', 'Outros', 'IFCO — Manga Tommy Atkins', 13.08, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('5ea6247c-98fd-4888-8f31-e41449b33144', '2026-09-03', 'Outros', 'IFCO — Tangerina Ponkan', 26.16, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('e91370c4-1b3f-483b-80f7-de0bd8c8d400', '2026-09-05', 'Outros', 'IFCO — Coco Seco', 6.54, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('a58efe9e-96de-4adc-8abe-918ff772e6ce', '2026-09-05', 'Outros', 'IFCO — Goiaba', 9.81, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('592ead3f-ed3a-453d-8cba-b03960ead041', '2026-09-05', 'Outros', 'IFCO — Manga Tommy Atkins', 35.12, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('cc688996-5c92-42ef-8978-083f13a46056', '2026-09-08', 'Outros', 'IFCO — Coco Seco', 6.54, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('279c9411-bd32-4629-848e-cd109ce52f57', '2026-09-08', 'Outros', 'IFCO — Manga Tommy Atkins', 65.40, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('c50ec5b3-9e08-4838-8f02-28ff935a6555', '2026-09-08', 'Outros', 'IFCO — Pinha', 6.54, 'Pinha')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('e8c2b25c-8b7f-4faa-8603-375f2d5f64ac', '2026-09-08', 'Outros', 'IFCO — Tangerina Ponkan', 9.81, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('35f1c0af-3138-4205-80a7-7ef965088358', '2026-09-09', 'Fretes', 'Frete melancia (Josilene)', 1250.00, 'Melancia')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('76a4d3ad-6f79-43c2-88ac-12ef70d78460', '2026-09-10', 'Outros', 'IFCO — Coco Seco', 6.54, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('5aa7e8e2-df89-44bd-89da-6d8fdbacbaf0', '2026-09-10', 'Outros', 'IFCO — Manga Tommy Atkins', 16.35, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('856e9f27-381e-40f9-8755-ca8dec44c630', '2026-09-10', 'Outros', 'IFCO — Tangerina Ponkan', 6.54, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('36aafd99-6d27-4fb0-82dc-8c14874b322d', '2026-09-11', 'Outros', 'Descarga (Armazém Mateus)', 1150.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('0caf3257-9aff-4a24-8c51-9e8f16ca325e', '2026-09-11', 'Fretes', 'Frete: buscar tangerina W. Murcott em Neópolis', 350.00, 'Tangerina Murcote')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('c301871c-8a72-47fe-8339-7cd3dbf4c965', '2026-09-12', 'Fretes', 'Frete redinhas', 140.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('7c93661e-8d55-432c-81c1-5e08df976728', '2026-09-12', 'Outros', 'IFCO — Manga Tommy Atkins', 55.59, 'Manga Tommy Atkins')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('025fd05f-f8ee-4a22-8240-3219582e71f0', '2026-09-12', 'Outros', 'IFCO — Tangerina Murcote', 65.40, 'Tangerina Murcote')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('f797aa82-8a35-4f2a-8bcd-663faea3143b', '2026-09-12', 'Outros', 'IFCO — Tangerina Ponkan', 55.59, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('a9fbdf7c-f10c-497c-8576-e6cfcc795717', '2026-09-12', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('6444802d-adeb-40e1-8b9a-3ae7c240cc01', '2026-09-14', 'Outros', 'Almoço (Churrascaria Netto e Prestes)', 61.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2ecba7f8-d45d-433b-8700-c42b7ab2fa8a', '2026-09-14', 'Outros', 'Encarregado mamão — bonificação', 200.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('36b76692-21d6-4da8-8057-701f41cb49aa', '2026-09-14', 'Impostos', 'ICMS mês 08 (SEFAZ-SE)', 2788.92, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('807d94c2-da25-41d1-8e19-25439d2034b4', '2026-09-14', 'Outros', 'Jantar (iFood)', 112.27, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('80a660e6-945d-4ee2-824a-800ce8bd1145', '2026-09-15', 'Outros', 'IFCO — Goiaba', 19.62, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('af5530c1-daef-4ae1-8537-fef5b0011081', '2026-09-15', 'Outros', 'IFCO — Tangerina Murcote', 52.32, 'Tangerina Murcote')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('de2f395f-92f7-4bc2-800a-a1d70be9c7e2', '2026-09-15', 'Outros', 'IFCO — Tangerina Ponkan', 55.59, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('261e22f1-0b54-43a5-825e-4df6688221e4', '2026-09-17', 'Diaristas', 'Descarrego limão (Márcio)', 450.00, 'Limão')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2a884b21-d045-4880-8cc4-224bfdfeed36', '2026-09-17', 'Fretes', 'FRETE — Limão', 8560.00, 'Limão')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('787400f6-7d76-4c9a-8aa8-cb28eecc6292', '2026-09-17', 'Outros', 'IFCO — Goiaba', 9.81, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('abb6f66d-c69b-4614-85e2-327f74fe517c', '2026-09-17', 'Outros', 'IFCO — Tangerina Ponkan', 19.62, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('c24efb1c-1d74-417c-8262-d16b6888b390', '2026-09-19', 'Diaristas', '2 diaristas carregando mamão', 400.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('b99666e3-dc95-4825-8ef8-62fc8a5b5b29', '2026-09-19', 'Diaristas', '4 diaristas arrumando mamão em Neópolis', 400.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('ddbdd8d4-14de-40be-82c9-b8e447fc7e7a', '2026-09-19', 'Combustíveis', 'Combustível Lagarto → Neópolis (carregamento)', 220.12, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('bd99ba0d-1663-416f-8d91-1bfa9c86fc6e', '2026-09-19', 'Fretes', 'Frete redinha mamão', 140.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('0700a239-cf34-4f6b-8726-6d295e6c7d19', '2026-09-19', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('446f74fb-ee40-4e53-8c84-6498b863a6cf', '2026-09-22', 'Outros', 'Despesa — Maracujá', 281.22, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('b5ebc06e-28a4-4849-8a45-468be6d2d206', '2026-09-22', 'Outros', 'IFCO — Manga Espada', 16.35, 'Manga Espada')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('89deb241-c1cc-4d23-80d8-31381c89120f', '2026-09-22', 'Outros', 'IFCO — Tangerina Ponkan', 3.27, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('1eb9980d-1af2-4468-863a-9c3f472f4a6a', '2026-09-24', 'Outros', 'IFCO — Mamão Havaí', 39.24, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('268e4d2b-06fc-4f9c-8a41-4b180c979509', '2026-09-24', 'Outros', 'IFCO — Manga Espada', 9.81, 'Manga Espada')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('3cdc0399-6c25-452e-8d92-0e5cf9662b38', '2026-09-24', 'Outros', 'IFCO — Maracujá', 186.39, 'Maracujá')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('515704c6-18f0-4643-8ef6-e9179f0657f3', '2026-09-26', 'Diaristas', 'Ajudantes para o Atakarejo (Márcio)', 200.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('80695624-1b8b-43a1-86b3-659e9372fbe0', '2026-09-26', 'Outros', 'IFCO — Coco Seco', 3.27, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('72318fe6-4958-4950-848f-460319f57ac1', '2026-09-26', 'Outros', 'IFCO — Mamão Havaí', 29.43, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('d0937e9a-4525-415b-8092-3cb9159ac344', '2026-09-29', 'Combustíveis', 'Combustível', 150.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('f839ca76-81e1-438a-8406-dd15d686db23', '2026-09-29', 'Outros', 'IFCO — Coco Seco', 3.27, 'Coco Seco')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('63aa9bd2-3a83-48a6-8db7-6bbe3fcbf573', '2026-09-29', 'Outros', 'IFCO — Goiaba', 39.24, 'Goiaba')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('370d1ba7-bd8f-403f-83ae-e446e086f48e', '2026-09-29', 'Outros', 'IFCO — Mamão Havaí', 55.59, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('2f7ea886-8d8a-416a-8efb-e00fb9ba0286', '2026-09-29', 'Outros', 'IFCO — Manga Espada', 39.24, 'Manga Espada')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('7fecb46f-6394-4122-8731-54e9b74a25cb', '2026-09-29', 'Outros', 'IFCO — Pinha', 9.81, 'Pinha')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('a657ffa5-3458-492b-8299-99b96def5951', '2026-09-29', 'Outros', 'IFCO — Tangerina Murcote', 3.27, 'Tangerina Murcote')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('082f69b7-6093-4963-85c3-d6fe8d6272c4', '2026-09-29', 'Outros', 'IFCO — Tangerina Ponkan', 19.62, 'Tangerina Ponkan')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('40ed0a83-b5bd-4197-8cb4-1a0a15e546fd', '2026-09-30', 'Diaristas', '2 diaristas e horas extras do Guilherme carregando mamão', 360.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('9df4eb14-2adb-46fb-899f-d1548339b9d9', '2026-09-30', 'Outros', 'Balancão R$ 40 + janta R$ 30 (Guilherme)', 70.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('9f80bb84-d105-4c8d-8722-e49a0d8db9d1', '2026-10-03', 'Diaristas', '2 diárias, 2 cafés da manhã e 2 almoços', 500.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('af7b8281-b993-4222-8f16-9383784dcf32', '2026-10-03', 'Combustíveis', 'Combustível mamão Neópolis (Guilherme)', 166.01, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('8cb23dd2-2a07-4ba6-828d-0a33be3a3a69', '2026-10-05', 'Fretes', 'Frete redinhas', 140.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('a37f1f91-702c-4ae9-8a38-d5f19b1222f8', '2026-10-05', 'Outros', 'Jantar dos carregadores', 148.00, null)
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
+insert into public.despesas (id, data, categoria, descricao, valor, fruta)
+  values ('d103bbf5-e898-4a10-812d-ca4813284960', '2026-10-05', 'Outros', 'Redinha mamão Havaí — 10 sacos (Embalavale)', 4800.00, 'Mamão Havaí')
+  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao, categoria = excluded.categoria, fruta = excluded.fruta;
 
 commit;
 

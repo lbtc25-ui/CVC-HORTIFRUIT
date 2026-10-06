@@ -149,7 +149,7 @@ total, status, NF) e migrar junto; assim a carga não duplica nem perde nada.
 
 ## Para rodar
 
-1. Banco novo da CVC: `instalar.sql` + `migracao-68-cvc-empresa-padrao.sql` + `migracao-69-recebedor-repasses.sql`.
+1. Banco novo da CVC: `instalar.sql` + `migracao-68-cvc-empresa-padrao.sql` + `migracao-69-recebedor-repasses.sql` + `migracao-70-despesa-por-fruta.sql`.
 2. `supabase/importacao-cvc-2026-10-05.sql` no SQL Editor.
 3. Conferir: `select * from vw_estoque_fruta;` e `vw_dre_mes`. O estoque de
    algumas frutas ficará negativo até entrarem as compras em caixa acima.

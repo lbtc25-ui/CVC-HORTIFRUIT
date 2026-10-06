@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Btn, Card, Icon, Input } from "./ui";
 import { supabase, supabaseConfigurado } from "../lib/supabase";
 import { COLORS } from "../lib/tema";
+import { urlDoApp } from "../lib/pedidoCliente";
 
 /**
  * Avisos no celular (ntfy) — só sócio master. Mostra se o aviso está ligado
@@ -77,7 +78,7 @@ export default function AvisosCelular() {
   };
 
   const salvar = () => executar(
-    () => supabase.rpc("avisos_celular_configurar", { p_topico: topico.trim(), p_url_app: urlApp.trim() || window.location.origin + "/", p_ativo: true }),
+    () => supabase.rpc("avisos_celular_configurar", { p_topico: topico.trim(), p_url_app: urlApp.trim() || urlDoApp() + "/", p_ativo: true }),
     "Tópico gravado. Agora toque em Enviar teste."
   );
 
@@ -140,7 +141,7 @@ export default function AvisosCelular() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginTop: 14 }}>
             <Input label="Tópico do ntfy" placeholder="ex.: carvalhocruz-pedidos-x7k2q9" value={topico}
               onChange={(e) => setTopico(e.target.value.replace(/\s/g, ""))} />
-            <Input label="Endereço do app (abre ao tocar no aviso)" placeholder={window.location.origin + "/"} value={urlApp}
+            <Input label="Endereço do app (abre ao tocar no aviso)" placeholder={urlDoApp() + "/"} value={urlApp}
               onChange={(e) => setUrlApp(e.target.value)} />
           </div>
           <p style={{ margin: "8px 0 0", fontSize: 12, color: COLORS.cinza, lineHeight: 1.5 }}>

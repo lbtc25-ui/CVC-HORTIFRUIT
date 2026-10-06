@@ -26,19 +26,30 @@ export function linkDoCaminho(caminho) {
   return loja ? { tipo: "loja", token: loja[1] } : null;
 }
 
+/**
+ * Endereço público do sistema. Sem VITE_APP_URL vale o endereço de onde o app
+ * está aberto — que é o *.vercel.app quando alguém entra por ele. Defina
+ * VITE_APP_URL (ex.: https://sistema.cvchortifruit.com.br) para que os links
+ * enviados aos clientes apontem sempre para o endereço do sistema.
+ */
+export function urlDoApp() {
+  const v = String(import.meta.env.VITE_APP_URL ?? "").trim().replace(/\/+$/, "");
+  return v || window.location.origin;
+}
+
 export function linkDePedido(token) {
   if (!token) return "";
-  return `${window.location.origin}${PREFIXO_LINK_PEDIDO}${token}`;
+  return `${urlDoApp()}${PREFIXO_LINK_PEDIDO}${token}`;
 }
 
 export function linkDePedidoRede(token) {
   if (!token) return "";
-  return `${window.location.origin}${PREFIXO_LINK_PEDIDO_REDE}${token}`;
+  return `${urlDoApp()}${PREFIXO_LINK_PEDIDO_REDE}${token}`;
 }
 
 export function linkDePedidoGeral(token) {
   if (!token) return "";
-  return `${window.location.origin}${PREFIXO_LINK_PEDIDO_GERAL}${token}`;
+  return `${urlDoApp()}${PREFIXO_LINK_PEDIDO_GERAL}${token}`;
 }
 
 // O Postgres manda a mensagem do `raise exception`; o resto (rede caiu,

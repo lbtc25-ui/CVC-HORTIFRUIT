@@ -480,23 +480,13 @@ export async function aguardarAutorizacao(id, emitente) {
  * Vendas chama (no lugar de emitirNfeParaVenda do src/lib/omie.js).
  */
 /**
- * Quem emite a nota: a CVC (padrão) ou a Carvalho Cruz, conforme a empresa
- * dos produtos. Uma nota sai por um CNPJ só — venda com produtos dos dois
- * emitentes precisa ser dividida em duas.
+ * Quem emite a nota. Por enquanto TODAS saem no CNPJ da Carvalho Cruz, pela
+ * conta Spedy da Carvalho (SPEDY_API_KEY), inclusive as vendas de produtos da
+ * CVC. Venda com produtos dos dois "emitentes" sai numa nota só. Quando a CVC
+ * tiver emissor próprio, é aqui que o emitente volta a depender do produto.
  */
-export function emitenteDaVenda(venda, produtosPorId) {
-  const emitentes = new Set(
-    (venda.itens ?? [])
-      .filter((i) => i.natureza !== "bonificacao")
-      .map((i) => (produtosPorId[i.produtoId]?.empresa === "carvalho_cruz" ? "carvalho_cruz" : "cvc"))
-  );
-  if (emitentes.size > 1) {
-    throw new Error(
-      "Esta venda mistura produtos faturados pela CVC e pela Carvalho Cruz. " +
-      "Divida em dois pedidos (um por emitente) para emitir as notas."
-    );
-  }
-  return [...emitentes][0] ?? "cvc";
+export function emitenteDaVenda() {
+  return "carvalho_cruz";
 }
 
 export async function emitirNfeParaVenda({ venda, loja, produtosPorId }) {

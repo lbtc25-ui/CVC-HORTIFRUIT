@@ -3,8 +3,7 @@
  * dados já carregados no app. Nada sai para um servidor: o arquivo nasce e
  * baixa no próprio aparelho.
  *
- * As bibliotecas entram por import { EMPRESA } from "./empresa";
-import dinâmico — só quem clica em "Exportar"
+ * As bibliotecas entram por import dinâmico — só quem clica em "Exportar"
  * paga o peso delas no download; o resto do app nem carrega.
  *
  * Sobre o pacote `xlsx` (SheetJS): o npm mostra um aviso de segurança alto
@@ -14,6 +13,7 @@ import dinâmico — só quem clica em "Exportar"
  * já são do próprio app (`json_to_sheet` + `writeFile`), nunca se abre um
  * .xlsx de fora. Decisão registrada, revisitar se o pacote publicar correção.
  */
+import { EMPRESA } from "./empresa";
 
 /**
  * @param {string} nomeArquivo sem extensão

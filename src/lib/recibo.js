@@ -2,10 +2,10 @@
  * Recibo de pedido — documento SEM valor fiscal, para as redes que recebem um
  * recibo a cada entrega da semana e uma única NF-e no fim, juntando tudo (ver
  * lib/notaSemanal.js). Feito com o mesmo jsPDF já usado no romaneio e nas
- * exportações da tela de Vendas — import { EMPRESA } from "./empresa";
-import dinâmico, só paga o peso quem clica.
+ * exportações da tela de Vendas — import dinâmico, só paga o peso quem clica.
  */
 import { brl, kg } from "./tema";
+import { EMPRESA } from "./empresa";
 
 let logoDataUrlPromise;
 

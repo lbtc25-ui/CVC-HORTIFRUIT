@@ -20,12 +20,12 @@ const ARTE = {
   simbolo: {
     arquivo: "logo-simbolo.png",
     proporcao: 437 / 384,
-    alt: "CVC Agro",
+    alt: "CVC Hortifruit",
   },
   assinatura: {
     arquivo: "logo-cvc.png",
     proporcao: 437 / 384,
-    alt: "CVC Agro — produzir, abastecer, fazer crescer",
+    alt: "CVC Hortifruit — produzir, abastecer, fazer crescer",
   },
 };
 

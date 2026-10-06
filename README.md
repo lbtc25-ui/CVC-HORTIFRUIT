@@ -27,7 +27,6 @@ da Carvalho (`api/spedy.js`).
 - Os rótulos de empresa e a regra de estoque ainda são os da Carvalho
   (`carvalho_cruz` = produção própria com estoque; `cvc` = revenda sem estoque):
   na CVC, que compra e vende tudo, o estoque deve valer para todos os produtos.
-- Logo/ícones da CVC (hoje ainda os da Carvalho em `public/` e `brand/`).
 - Recuperação de notas canceladas (`recuperarCanceladasSpedy`) lê só a conta da CVC.
 
 ---

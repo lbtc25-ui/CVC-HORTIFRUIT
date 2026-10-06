@@ -19,13 +19,13 @@ import { COLORS } from "../lib/tema";
 const ARTE = {
   simbolo: {
     arquivo: "logo-simbolo.png",
-    proporcao: 188 / 288,
-    alt: "Carvalho Cruz",
+    proporcao: 437 / 384,
+    alt: "CVC Agro",
   },
   assinatura: {
-    arquivo: "logo-carvalho-cruz.png",
-    proporcao: 333 / 384,
-    alt: "Carvalho Cruz — da nossa fazenda para sua mesa",
+    arquivo: "logo-cvc.png",
+    proporcao: 437 / 384,
+    alt: "CVC Agro — produzir, abastecer, fazer crescer",
   },
 };
 

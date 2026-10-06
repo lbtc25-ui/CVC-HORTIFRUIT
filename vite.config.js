@@ -17,7 +17,7 @@ export default defineConfig({
         "favicon.svg",
         "apple-touch-icon.png",
         "logo-simbolo.png",
-        "logo-carvalho-cruz.png",
+        "logo-cvc.png",
       ],
 
       manifest: {

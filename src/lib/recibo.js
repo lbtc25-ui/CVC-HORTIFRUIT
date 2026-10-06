@@ -16,7 +16,7 @@ let logoDataUrlPromise;
  */
 function carregarLogoDataUrl() {
   if (!logoDataUrlPromise) {
-    logoDataUrlPromise = fetch(`${import.meta.env.BASE_URL}logo-carvalho-cruz.png`)
+    logoDataUrlPromise = fetch(`${import.meta.env.BASE_URL}logo-cvc.png`)
       .then((r) => (r.ok ? r.blob() : Promise.reject(new Error("logo indisponível"))))
       .then((blob) => new Promise((resolve, reject) => {
         const leitor = new FileReader();

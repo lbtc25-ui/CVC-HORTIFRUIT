@@ -141,6 +141,39 @@ DESPESAS_WA = [
 ]
 
 
+# ─── Repasses (comprovantes de dinheiro entre contas) ───────────────────────
+# Sentido ainda não confirmado → 'a_confirmar' (fica fora do saldo).
+# (data, conta, valor, descrição)
+REPASSES_WA = [
+    # Pix do Xande (BTG, AVF) para a conta Nu da Carvalho Cruz
+    ("2026-08-13", "avf", 23730.00, "Pix Xande → CC"),
+    ("2026-08-17", "avf", 4200.00, "Pix Xande → CC (limão AVF 1.050 kg)"),
+    ("2026-08-19", "avf", 2400.00, "Pix Xande → CC (limão AVF 600 kg)"),
+    ("2026-09-01", "avf", 7795.20, "Pix Xande → CC (limão CD Mix 2.000 kg)"),
+    ("2026-09-15", "avf", 16883.80, "Pix Xande → CC"),
+    ("2026-09-17", "avf", 1259.00, "Pix Xande → CC"),
+    ("2026-09-17", "avf", 945.00, "Pix Xande → CC (comprovante enviado nos dois grupos)"),
+    ("2026-09-19", "avf", 9720.00, "Pix Xande → CC (limão Rodrigo)"),
+    ("2026-09-19", "avf", 280.00, "Pix Xande → CC"),
+    ("2026-09-22", "avf", 10800.00, "Pix Xande → CC (limão Mix)"),
+    ("2026-09-25", "avf", 546.00, "Pix Xande → CC"),
+    ("2026-10-03", "avf", 808.50, "Pix Xande → CC"),
+    # Banco Safra (CVC/CC, CNPJ 0001-72) → Nu da Carvalho Cruz, enviados pelo Carlinhos
+    ("2026-08-19", "carvalho_cruz", 2464.43, "Safra → Nu: mercadorias da semana passada Atakarejo"),
+    ("2026-08-21", "carvalho_cruz", 326.00, "Safra → Nu: frutas JPJS da Carvalho Cruz"),
+    ("2026-08-21", "carvalho_cruz", 5254.86, "Safra → Nu: venda Atakarejo terça-feira"),
+    ("2026-08-21", "carvalho_cruz", 3493.00, "Safra → Nu: vendas de limão, ponkan, piemonte e pera d'Anjou"),
+    ("2026-09-14", "carvalho_cruz", 16000.00, "Safra → Nu: Dinheiro CVC"),
+    ("2026-09-14", "carvalho_cruz", 4000.00, "Safra → Nu: Dinheiro CVC"),
+    ("2026-09-16", "carvalho_cruz", 4000.00, "Safra → Nu: Dinheiro CVC CC"),
+    ("2026-09-17", "carvalho_cruz", 10097.29, "Safra → Nu: Dinheiro CVC (Carvalho Cruz zerada)"),
+    ("2026-09-23", "carvalho_cruz", 46574.17, "Safra → Nu: Mercadorias CVC"),
+    ("2026-09-25", "carvalho_cruz", 10446.43, "Safra → Nu: Vendas CVC quinta"),
+    ("2026-10-01", "carvalho_cruz", 23726.23, "Safra → Nu: Pagamento mercadorias CVC"),
+]
+RECEBEDOR = {"CC": "carvalho_cruz", "AVF": "avf"}  # vendedor = conta que recebe
+
+
 def uuid_de(*partes):
     h = hashlib.sha1("|".join(str(p) for p in partes).encode()).hexdigest()
     return f"{h[:8]}-{h[8:12]}-4{h[13:16]}-8{h[17:20]}-{h[20:32]}"
@@ -293,7 +326,7 @@ def main():
     p("--  Carga CVC — planilha CVC COMPRA E VENDA x grupos de WhatsApp (até 05/10/2026)")
     p("--  GERADO por scripts/importar-cvc-planilha-whatsapp.py — não edite à mão.")
     p("--")
-    p("--  Rode DEPOIS de instalar.sql e das migrações (até a 68). Idempotente: os ids")
+    p("--  Rode DEPOIS de instalar.sql, da migração 68 e da 69 (recebedor/repasses). Idempotente: os ids")
     p("--  vêm do conteúdo, rodar de novo atualiza em vez de duplicar.")
     p("--  O que ficou de fora e as divergências: docs/cruzamento-cvc-2026-10-05.md")
     p("-- ============================================================================")
@@ -347,12 +380,20 @@ def main():
             f"'qty', {num(i['qtd'])}, 'precoUnitario', {num(i['total'] / i['qtd'])}, "
             f"'kgPorUnidade', {num(i['kg_un'])}, 'kgTotal', {num(i['kg'])}, 'natureza', 'venda')"
             for i in itens)
-        p("insert into public.vendas (id, numero, loja_id, data, prazo_dias, itens, total, kg_total, status)")
+        p("insert into public.vendas (id, numero, loja_id, data, prazo_dias, itens, total, kg_total, status, recebedor)")
         p(f"  select {q(vid)}, (select coalesce(max(numero), 1000) + 1 from public.vendas), l.id, {q(data)}, 0,")
-        p(f"         jsonb_build_array({js}), {total:.2f}, {num(kg)}, {q('pago' if pago else 'pendente')}")
+        p(f"         jsonb_build_array({js}), {total:.2f}, {num(kg)}, {q('pago' if pago else 'pendente')}, {q(RECEBEDOR.get(vend, 'cvc'))}")
         p("  from public.lojas l join public.redes r on r.id = l.rede_id")
         p(f"  where lower(r.nome) = lower({q(cli)}) and lower(l.nome) = lower({q(loja)})")
-        p("  on conflict (id) do update set itens = excluded.itens, total = excluded.total, kg_total = excluded.kg_total, status = excluded.status;")
+        p("  on conflict (id) do update set itens = excluded.itens, total = excluded.total, kg_total = excluded.kg_total, status = excluded.status, recebedor = excluded.recebedor;")
+    p("")
+
+    p("-- Repasses entre as contas e a CVC (sentido a confirmar; ver migração 69)")
+    for d, conta, v, desc in REPASSES_WA:
+        rid = uuid_de("repasse-cvc", d, conta, v)
+        p("insert into public.repasses (id, data, conta, sentido, valor, descricao)")
+        p(f"  values ({q(rid)}, {q(d)}, {q(conta)}, 'a_confirmar', {v:.2f}, {q(desc)})")
+        p("  on conflict (id) do update set valor = excluded.valor, descricao = excluded.descricao;")
     p("")
 
     p("-- Perdas")

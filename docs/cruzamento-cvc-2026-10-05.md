@@ -33,8 +33,10 @@ a compra da goiaba da Suely de 29/08 estava sem valor — ver "Premissas").
 3. **Vendas sem data na planilha** (limão: Ismeralda, Rodrigo, Diversos ×2, Mix;
    Olé; perda do abacate) entraram em 28/08. Pelo chat, Rodrigo 550 kg é de
    ~19/08 (Pix de R$ 2.200 em 19/08) e os 47 kg são de 24/08.
-4. **Status**: PAGO → pago; A PAGAR/A RECEBER → pendente. Vendedor (AVF/CC/CVC)
-   não tem campo no sistema e não foi gravado.
+4. **Status**: PAGO → pago; A PAGAR/A RECEBER → pendente.
+   **Vendedor = conta que recebe**: CC → o dinheiro cai na Carvalho Cruz, AVF →
+   cai na AVF, CVC → cai na própria CVC; CC e AVF precisam repassar à CVC.
+   A migração 69 guarda isso em `vendas.recebedor` e controla os repasses.
 5. Cliente vira rede com loja "MATRIZ" (Atakarejo, Bombom, Brauna, Diversos,
    Mix, CD Mix, Rodrigo, JPJS, Victor, Carcará, Ismeralda).
 6. Produtos novos criados se faltarem: Tangerina Olé, Mamão Formosa.
@@ -117,20 +119,28 @@ está na planilha; os R$ 2.230 não achei de qual fruta.
 850 kg R$ 4.530,50), compras Eduardo pokan 27–28/08, frete limão R$ 1.521,65 /
 R$ 800 / R$ 278,20 de 11/08.
 
-## Contas CVC × Carvalho Cruz (não lançadas — é acerto, não despesa)
+## Repasses para a CVC (migração 69)
 
-Repasses para a conta da Carvalho Cruz que o grupo registra como "Dinheiro CVC":
-R$ 16.883,80 (15/09) + 16.000 (14/09) + 4.000 ×2 (14 e 16/09) + 10.097,29
-(17/09, "Carvalho Cruz zerada"), "Mercadorias CVC" R$ 46.574,17 (23/09),
-"Vendas CVC quinta" R$ 10.446,43 (25/09) e "Pagamento mercadorias CVC"
-R$ 23.726,23 (01/10). Pix do Xande (AVF) para a CC: 23.730 (13/08), 2.400 (19/08), 4.200 (17/08), 7.795,20 (01/09), 945/1.259
-(17/09), 9.720 e 280 (19/09), 10.800 (22/09), 546 (25/09), 808,50 (03/10).
-(Em 12/08 o Xande também pagou do bolso o limão/tangerina do Papagaio, R$ 14.470, e R$ 1.800 ao Wesley Dantas — finalidade não informada.)
-Sugiro lançar em **Acertos** depois que você confirmar quem deve a quem.
+Vendas da planilha por quem recebeu (as de CVC não existem na planilha):
+
+| Recebedor | Pago (já na conta dele) | A receber | Repasses lançados (sentido a confirmar) |
+|---|---:|---:|---:|
+| Carvalho Cruz | R$ 136.515,49 | R$ 33.701,19 | R$ 126.382,41 (Safra → Nu) |
+| AVF | R$ 43.519,20 | — | R$ 79.367,50 (Pix do Xande → Nu da CC) |
+
+O sistema calcula `a_repassar = vendas pagas − repasses para a CVC + repasses
+da CVC` em `vw_repasse_conta`. **Os 23 comprovantes de transferência entre contas
+entraram como "a confirmar" e ficam fora do saldo**, porque nos comprovantes o
+destino é sempre o Nu da Carvalho Cruz (inclusive os do Xande), então não dá
+para saber só pelo comprovante se foi a conta repassando à CVC ou a CVC
+reembolsando a CC por pagamentos que ela fez (JPJS, ICMS etc.). Se me disser o
+sentido de cada grupo (ex.: "Safra → Nu = CVC reembolsando a CC"), eu fecho o
+saldo. No app ainda **não há tela** para isso: é consulta
+(`select * from vw_repasse_conta`) até criarmos a tela.
 
 ## Para rodar
 
-1. Banco novo da CVC: `instalar.sql` + `migracao-68-cvc-empresa-padrao.sql`.
+1. Banco novo da CVC: `instalar.sql` + `migracao-68-cvc-empresa-padrao.sql` + `migracao-69-recebedor-repasses.sql`.
 2. `supabase/importacao-cvc-2026-10-05.sql` no SQL Editor.
 3. Conferir: `select * from vw_estoque_fruta;` e `vw_dre_mes`. O estoque de
    algumas frutas ficará negativo até entrarem as compras em caixa acima.

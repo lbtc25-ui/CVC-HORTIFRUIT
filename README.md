@@ -14,7 +14,9 @@ Cruz. O app emite NF-e por **duas contas da Spedy**:
 | `SPEDY_API_KEY`            | CVC (emitente padrão)          |
 | `SPEDY_API_KEY_CARVALHO`   | Carvalho Cruz                  |
 
-O emitente vem do campo **Empresa** do produto (`cvc` ou `carvalho_cruz`).
+O emitente vem do campo **Empresa que emite a nota** do produto (`cvc` ou
+`carvalho_cruz`). Todo produto tem estoque, venha a nota por onde vier; a
+CVC carrega as despesas, e a Carvalho Cruz só aparece como emitente.
 Uma nota sai por um CNPJ só: venda com produtos dos dois emitentes é recusada
 com aviso para dividir em dois pedidos. Devoluções saem pelo mesmo emitente da
 venda; consultas/DANFE/XML de notas antigas tentam a conta da CVC e, em 404, a
@@ -24,9 +26,7 @@ da Carvalho (`api/spedy.js`).
 
 - Banco novo: rodar `supabase/instalar.sql` num projeto Supabase da CVC e
   **não** importar os dados da Carvalho (`importacao-*.sql`, `correcao-*.sql`).
-- Os rótulos de empresa e a regra de estoque ainda são os da Carvalho
-  (`carvalho_cruz` = produção própria com estoque; `cvc` = revenda sem estoque):
-  na CVC, que compra e vende tudo, o estoque deve valer para todos os produtos.
+- Rodar `supabase/migracao-68-cvc-empresa-padrao.sql` no banco da CVC (uma vez só).
 - Recuperação de notas canceladas (`recuperarCanceladasSpedy`) lê só a conta da CVC.
 
 ---

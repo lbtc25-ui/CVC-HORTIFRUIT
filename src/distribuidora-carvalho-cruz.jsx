@@ -109,14 +109,9 @@ function frutasDe(dados) {
   return [...FRUTAS_PADRAO, ...[...novas].sort((a, b) => a.localeCompare(b, "pt-BR"))];
 }
 
-/**
- * As frutas que têm estoque: só as da Carvalho Cruz. As da CVC são revenda,
- * compradas e vendidas sem controle de estoque no app — ficam fora dos
- * cartões de estoque, das compras, das perdas e das contagens.
- */
+/** Na CVC toda fruta tem estoque, venha a nota pela CVC ou pela Carvalho Cruz. */
 function frutasComEstoque(dados) {
-  const empresaDaFruta = empresaDasFrutas(dados.produtos ?? []);
-  return frutasDe(dados).filter((f) => empresaDaFruta.get(f) !== "cvc");
+  return frutasDe(dados);
 }
 
 /**
@@ -124,10 +119,10 @@ function frutasComEstoque(dados) {
  * misturam: a receita de um produto conta para a empresa dele no DRE.
  */
 const EMPRESAS = [
-  { value: "carvalho_cruz", label: "Carvalho Cruz" },
   { value: "cvc", label: "CVC" },
+  { value: "carvalho_cruz", label: "Carvalho Cruz" },
 ];
-const nomeDaEmpresa = (empresa) => EMPRESAS.find((e) => e.value === empresa)?.label ?? "Carvalho Cruz";
+const nomeDaEmpresa = (empresa) => EMPRESAS.find((e) => e.value === empresa)?.label ?? "CVC";
 
 /** "PETROX · P.CAJU" — como o cliente é identificado em toda tela. */
 function nomeDoCliente(dados, lojaId) {
@@ -207,7 +202,7 @@ const ChipBonificado = () => (
 /** Pedido que o próprio cliente fez pelo link — laranja enquanto ninguém conferiu. */
 /** De qual empresa é o produto (ou a fruta): produção própria e revenda não se misturam. */
 const ChipEmpresa = ({ empresa }) => {
-  const cvc = empresa === "cvc";
+  const cvc = empresa !== "carvalho_cruz";
   return (
     <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 10, whiteSpace: "nowrap",
       background: cvc ? "#E8F1FB" : `${COLORS.verde}1A`, color: cvc ? COLORS.azul : COLORS.verde }}>
@@ -1163,7 +1158,7 @@ const Dashboard = ({ dados, papel, aoVerPrevisao }) => {
               {recorte.parcial
                 ? " · despesas e compras não são lançadas por cliente, rede ou produto: aqui a conta é receita − custo estimado da fruta (kg vendido × custo médio de compra). A despesa entra diluída: kg vendido × custo da operação por kg da empresa no período. Filtrando por fruta, o resultado após operação desconta a fruta comprada no período, não o custo estimado."
                 : filtros.empresa && filtros.empresa !== EMPRESA_PADRAO
-                  ? ` · só ${nomeDaEmpresa(filtros.empresa)}: receita − mercadoria. Despesas, combustível e folha são da Carvalho Cruz.`
+                  ? ` · só ${nomeDaEmpresa(filtros.empresa)}: receita − mercadoria. Despesas, combustível e folha são da CVC.`
                   : " · receita − despesas − mercadoria = resultado. Despesas incluem combustível e folha. Custo operação / kg = despesas ÷ kg vendidos — é ele que dilui a despesa por fruta nas tabelas abaixo."}
             </p>
           </div>
@@ -2424,8 +2419,8 @@ const CSTS_PIS_COFINS = [
 ];
 const UNIDADES_NOTA = ["KG", "UN", "BAG", "CX"];
 
-/** Ordem dos produtos no pedido: Carvalho Cruz primeiro, depois a CVC. */
-const ordemNaVenda = (p) => (p.empresa === "cvc" ? 1 : 0);
+/** Ordem dos produtos no pedido: CVC primeiro, depois os faturados pela Carvalho Cruz. */
+const ordemNaVenda = (p) => (p.empresa === "carvalho_cruz" ? 1 : 0);
 
 /** O que falta no produto para emitir NF-e pelo app. null = pronto. */
 function pendenciaFiscal(p) {
@@ -2772,7 +2767,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
     if (!podeSalvarProduto) return;
     const emSaco = formProduto.unidadeVenda === "saco";
     // CFOP em branco: produção própria é 5.101; revenda (CVC), 5.102.
-    const cfopPadrao = formProduto.cfopPadrao || (empresaProduto === "cvc" ? "5.102" : "5.101");
+    const cfopPadrao = formProduto.cfopPadrao || "5.102";
     const campos = {
       nome: formProduto.nome.trim(),
       fruta: frutaFinal,
@@ -2976,7 +2971,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
                     </button>
                   )}
                 </span>
-                {empresaDaFruta.get(s.fruta) === "cvc" && <ChipEmpresa empresa="cvc" />}
+                {empresaDaFruta.get(s.fruta) === "carvalho_cruz" && <ChipEmpresa empresa="carvalho_cruz" />}
               </div>
               <div style={{ fontSize: 30, fontWeight: 800, color: cor, marginTop: 6, lineHeight: 1.1 }}>
                 {s.estoque.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}
@@ -3374,7 +3369,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
                       <td style={{ padding: "11px 16px", fontSize: 12, whiteSpace: "nowrap" }}>
                         {pendencia
                           ? <span style={{ color: pendencia === "emitir no Spedy" ? "#856404" : COLORS.vermelho, fontWeight: 600 }}>{pendencia}</span>
-                          : <span style={{ color: COLORS.verde, fontWeight: 600 }}>✓ {p.cfopPadrao || "5.101"}</span>}
+                          : <span style={{ color: COLORS.verde, fontWeight: 600 }}>✓ {p.cfopPadrao || "5.102"}</span>}
                       </td>
                       <td style={{ padding: "11px 16px", textAlign: "right" }}>
                         {podeGerir && (
@@ -3575,7 +3570,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
             )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <Select label="Empresa *" value={empresaProduto} disabled={!!empresaTravada}
+              <Select label="Empresa que emite a nota *" value={empresaProduto} disabled={!!empresaTravada}
                 onChange={(e) => setFormProduto((f) => ({ ...f, empresa: e.target.value }))}
                 options={EMPRESAS} style={empresaTravada ? { background: COLORS.cinzaClaro } : undefined} />
               <div style={{ fontSize: 12, color: COLORS.cinza, lineHeight: 1.5 }}>
@@ -3622,7 +3617,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 <Input label="NCM *" value={formProduto.ncm} onChange={campoProduto("ncm")} placeholder="0805.10.00" />
-                <Select label="CFOP" value={formProduto.cfopPadrao || (empresaProduto === "cvc" ? "5.102" : "5.101")}
+                <Select label="CFOP" value={formProduto.cfopPadrao || "5.102"}
                   onChange={campoProduto("cfopPadrao")} options={CFOPS} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -3658,7 +3653,7 @@ const Estoque = ({ dados, setDados, podeGerir }) => {
                   Este código já é de "{produtoComMesmoCodigo.nome}". Use um código diferente.
                 </div>
               )}
-              {(!formProduto.icmsCst || !formProduto.pisCst || !formProduto.cofinsCst) && empresaProduto === "cvc" && (
+              {(!formProduto.icmsCst || !formProduto.pisCst || !formProduto.cofinsCst) && (
                 <div style={{ fontSize: 12, color: COLORS.vermelho, lineHeight: 1.5 }}>
                   Sem o CST de ICMS, PIS e COFINS o app não emite nota deste produto.
                 </div>
@@ -3778,7 +3773,7 @@ const ConferenciaPdf = ({ importacao, total, lojaEscolhida, produtos, aoEscolher
   const opcoesProduto = [{ value: "", label: "Escolher produto…" },
     ...[...produtos]
       .sort((a, b) => ordemNaVenda(a) - ordemNaVenda(b) || a.nome.localeCompare(b.nome, "pt-BR"))
-      .map((p) => ({ value: p.id, label: p.empresa === "cvc" ? `${p.nome} · CVC` : p.nome }))];
+      .map((p) => ({ value: p.id, label: p.empresa === "carvalho_cruz" ? `${p.nome} · Carvalho` : p.nome }))];
   return (
     <div style={{ background: "#FFF3E0", border: `1px solid ${COLORS.laranja}`, borderRadius: 10, padding: "10px 14px", fontSize: 13, color: COLORS.cinzaEscuro, lineHeight: 1.5, display: "flex", flexDirection: "column", gap: 8 }}>
       <div>
@@ -4699,7 +4694,7 @@ const Vendas = ({ dados, setDados, podeRemover }) => {
                       .sort((a, b) => ordemNaVenda(a) - ordemNaVenda(b) || a.nome.localeCompare(b.nome, "pt-BR"))
                       .map((p) => ({
                         value: p.id,
-                        label: p.empresa === "cvc" ? `${p.nome} · CVC` : p.nome,
+                        label: p.empresa === "carvalho_cruz" ? `${p.nome} · Carvalho` : p.nome,
                       }))]} />
                 <Select label="Natureza" value={item.natureza} onChange={(e) => mudarNatureza(e.target.value)}
                   options={[{ value: "venda", label: "Venda" }, { value: "bonificacao", label: "Bonificação" }]} />
@@ -8725,7 +8720,7 @@ const Financeiro = ({ dados }) => {
     tabelaExportavel("A receber por cliente", "A receber por cliente", colunasDevedores, [...devedores].sort((a, b) => b.total - a.total)),
     { nome: "Contas a Receber", titulo: "Contas a Receber", colunas: colunasReceber, linhas: linhasReceber },
   ];
-  const arquivoFinanceiro = filtros.empresa ? `financeiro-${filtros.empresa.replace("_", "-")}` : "financeiro-carvalho-cruz";
+  const arquivoFinanceiro = filtros.empresa ? `financeiro-${filtros.empresa.replace("_", "-")}` : "financeiro-cvc";
   const exportarFinanceiroXlsx = () => exportarXlsx(arquivoFinanceiro, tabelasFinanceiro());
   const exportarFinanceiroPdf = () => exportarPdf(arquivoFinanceiro, `Relatório Financeiro — ${descricaoRecorte}`, tabelasFinanceiro());
 
@@ -8813,7 +8808,7 @@ const Financeiro = ({ dados }) => {
                   {parcial
                     ? "Despesas e compras não são lançadas por cliente, rede ou produto — a conta aqui é receita − custo estimado da fruta (kg × custo médio de compra)."
                     : filtros.empresa && filtros.empresa !== EMPRESA_PADRAO
-                      ? `Só ${nomeDaEmpresa(filtros.empresa)}: receita − mercadoria. Despesas, combustível e folha são da Carvalho Cruz.`
+                      ? `Só ${nomeDaEmpresa(filtros.empresa)}: receita − mercadoria. Despesas, combustível e folha são da CVC.`
                       : "Receita − despesas − mercadoria − taxas dos clientes (IFCO, CD, antecipação). A mercadoria é a que foi comprada no período, não o custo do que saiu — é o método da sua planilha."}
                 </p>
               </div>

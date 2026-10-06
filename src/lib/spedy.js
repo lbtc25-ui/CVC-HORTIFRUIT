@@ -140,7 +140,7 @@ export function unidadeDaNota(produto, item) {
 }
 
 /** CFOP da venda do produto, em número (5101). */
-const cfopDeVenda = (produto) => Number(String(produto.cfopPadrao || "5101").replace(".", ""));
+const cfopDeVenda = (produto) => Number(String(produto.cfopPadrao || "5102").replace(".", ""));
 
 // CSTs que o app emite. ICMS: 40 isenta, 41 não tributada, 50 suspensão,
 // 60 ST já recolhida — sem base nem alíquota — e 00, tributada integralmente,
@@ -158,7 +158,7 @@ const CST_PIS_COFINS_SEM_ALIQUOTA = ["04", "05", "06", "07", "08", "09"];
  * a de sempre (CST 40 / 07 / 07); revenda (CVC) precisa da dela.
  */
 export function tributacaoDoProduto(produto) {
-  const legado = produto.empresa !== "cvc";
+  const legado = false; // na CVC todo produto precisa do CST cadastrado
   const icms = String(produto.icmsCst || (legado ? "40" : "")).trim();
   const pis = String(produto.pisCst || (legado ? "07" : "")).trim();
   const cofins = String(produto.cofinsCst || (legado ? "07" : "")).trim();

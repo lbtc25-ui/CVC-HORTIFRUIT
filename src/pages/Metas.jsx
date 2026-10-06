@@ -14,19 +14,19 @@ import { COLORS, brl, kg } from "../lib/tema";
  * vendas do período, com a mesma regra do DRE — pedido cancelado e
  * bonificação ficam de fora.
  *
- * Carvalho Cruz e CVC não se misturam: cada empresa tem as próprias metas e
+ * CVC e Carvalho Cruz (quem emite a nota) não se misturam: cada empresa tem as próprias metas e
  * o realizado de cada uma só conta os produtos dela (produto.empresa). O
  * Consolidado soma as duas — metas e realizado — e é só de leitura.
  */
 
 const EMPRESAS_META = [
-  { valor: "carvalho_cruz", rotulo: "Carvalho Cruz" },
   { valor: "cvc", rotulo: "CVC" },
+  { valor: "carvalho_cruz", rotulo: "Carvalho Cruz" },
   { valor: "consolidado", rotulo: "Consolidado" },
 ];
 const EMPRESAS_REAIS = EMPRESAS_META.filter((e) => e.valor !== "consolidado").map((e) => e.valor);
 const nomeEmpresa = (e) => EMPRESAS_META.find((x) => x.valor === e)?.rotulo ?? "";
-const empresaDaMeta = (m) => (m.empresa === "cvc" ? "cvc" : EMPRESA_PADRAO);
+const empresaDaMeta = (m) => (m.empresa === "carvalho_cruz" ? "carvalho_cruz" : EMPRESA_PADRAO);
 
 const PERIODOS = [
   { valor: "diaria", rotulo: "Diária" },
@@ -401,7 +401,7 @@ const Metas = ({ dados, setDados, frutas }) => {
       )}
 
       <div>
-        <h3 style={{ margin: "0 0 12px", color: COLORS.cinzaEscuro, fontSize: 16 }}>{consolidado ? "Geral — Carvalho Cruz + CVC" : `Geral — ${nomeEmpresa(empresa)}`}</h3>
+        <h3 style={{ margin: "0 0 12px", color: COLORS.cinzaEscuro, fontSize: 16 }}>{consolidado ? "Geral — CVC + Carvalho Cruz" : `Geral — ${nomeEmpresa(empresa)}`}</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
           {INDICADORES.map((ind) => (
             <CartaoMeta key={ind.valor} indicador={ind} realizado={geral[ind.valor]} meta={metaDe(ind.valor)} fracao={fracao} />

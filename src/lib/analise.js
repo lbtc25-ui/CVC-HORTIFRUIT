@@ -16,12 +16,13 @@ import { hojeISO, nomeDoMes } from "./datas";
 import { efeitosDasDevolucoes } from "./notas";
 import { taxasDaLoja } from "./taxas";
 
-export const EMPRESA_PADRAO = "carvalho_cruz";
+// A CVC é a empresa do sistema: carrega despesas, combustível e folha. A
+// "Carvalho Cruz" é a empresa que ainda emite a nota de parte dos produtos.
+export const EMPRESA_PADRAO = "cvc";
 
 /**
  * A empresa de cada fruta, tirada dos produtos dela. Fruta sem produto fica
- * na Carvalho Cruz, e a fruta só é da CVC se todos os produtos dela forem —
- * a mesma regra da view vw_receita_empresa_mes.
+ * na CVC, e a fruta só é da Carvalho Cruz se todos os produtos dela forem.
  */
 export function empresaDasFrutas(produtos) {
   const mapa = new Map();
@@ -326,8 +327,8 @@ export function somarItens(itens, custos) {
   for (const i of itens) {
     receita += i.receita;
     kg += i.kg;
-    // Só o quilo da Carvalho Cruz carrega despesa: despesas, combustível e
-    // folha são dela, não das outras empresas.
+    // Só o quilo da CVC carrega despesa: despesas, combustível e folha
+    // são dela, não do que sai pela nota da Carvalho Cruz.
     if (i.empresa === EMPRESA_PADRAO) kgOperacao += i.kg;
     kgBonificado += i.kgBonificado;
     if (!i.bonificacao) {
@@ -428,7 +429,7 @@ export function dreDoRecorte(dados, f, intervalo, agrupar = "mes") {
     }
   }
 
-  // Custo da operação por quilo: as despesas da Carvalho Cruz no período
+  // Custo da operação por quilo: as despesas da CVC no período
   // (despesas, combustível e folha) divididas pelos quilos que ela vendeu no
   // período. Não olha rede, cliente, fruta nem produto — é a régua da empresa
   // inteira, e é ela que dilui a despesa por qualquer recorte: cada quilo

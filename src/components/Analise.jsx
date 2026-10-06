@@ -64,7 +64,7 @@ export function BarraFiltros({
   }, [dados.lojas, dados.redes, filtros.rede]);
   const produtos = useMemo(
     () => dados.produtos
-      .filter((p) => (!filtros.fruta || p.fruta === filtros.fruta) && (!filtros.empresa || (p.empresa ?? "carvalho_cruz") === filtros.empresa))
+      .filter((p) => (!filtros.fruta || p.fruta === filtros.fruta) && (!filtros.empresa || (p.empresa ?? "cvc") === filtros.empresa))
       .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")),
     [dados.produtos, filtros.fruta, filtros.empresa]
   );

@@ -9,7 +9,7 @@ import { pedidosDaNotaConsolidada, valorConsolidadoDaNota } from "../lib/notaSem
 import { notasEmitidasDoApp } from "../lib/sped/coletar";
 import { novoId } from "../lib/mappers";
 import CartaCorrecaoModal from "../components/CartaCorrecaoModal";
-import { corrigirCodigosDaNota, enviarCartaCorrecaoLivre, precisaConferirCce, danfeUrlSpedy, recuperarCanceladasSpedy, xmlUrlSpedy, obterDadosCancelamentoSpedy } from "../lib/spedy";
+import { corrigirCodigosDaNota, enviarCartaCorrecaoLivre, precisaConferirCce, danfeUrlSpedy, recuperarCanceladasSpedy, xmlUrlSpedy, obterDadosCancelamentoSpedy, EMISSAO_NFE_DESABILITADA } from "../lib/spedy";
 import { COLORS, brl } from "../lib/tema";
 import Devolucoes, { EmitirDevolucaoModal } from "./Devolucoes";
 import ArquivosFiscais from "./ArquivosFiscais";
@@ -403,7 +403,7 @@ const Emitidas = ({ dados, setDados }) => {
                                 Carta de correção
                               </button>
                             )}
-                            {v.nfeStatus === "autorizada" && v.nfeChave && (
+                            {!EMISSAO_NFE_DESABILITADA && v.nfeStatus === "autorizada" && v.nfeChave && (
                               <button onClick={() => setDevolvendo(v)} title="Emitir nota de devolução desta venda"
                                 style={{ background: "#FFF3E0", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer", color: COLORS.laranjaEscuro, fontSize: 12, fontWeight: 600 }}>
                                 Devolução

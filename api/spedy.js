@@ -28,6 +28,11 @@
 // saco com fruta e peso na descrição.
 const VERSAO_NFE_MINIMA = 3;
 
+// Emissão de NF-e desligada no sistema da CVC (EMISSAO_NFE_DESABILITADA em
+// src/lib/spedy.js). A trava fica aqui também para valer em aparelho com a
+// versão antiga do app aberta. Consultas, cancelamento e CC-e continuam.
+const EMISSAO_NFE_DESABILITADA = true;
+
 const METODOS_PERMITIDOS = new Set(["GET", "POST", "PUT", "DELETE"]);
 // Só os recursos que o app realmente usa — não é um proxy genérico pra
 // conta inteira do Spedy. "/orders" é o registro da venda no painel da
@@ -79,6 +84,10 @@ export default async function handler(req, res) {
   // o saco só como "Saco 10 kg". Recusa versão velha e, por garantia, item
   // com código vazio/UUID ou saco sem a fruta na descrição.
   if (method === "POST" && path.split("?")[0] === "/product-invoices") {
+    if (EMISSAO_NFE_DESABILITADA) {
+      res.status(403).json({ erro: "A emissão de NF-e pelo sistema da CVC está desabilitada." });
+      return;
+    }
     const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     const SACO_GENERICO = /^saco\s*(de\s*)?[\d.,]+\s*kg$/i;
     const itens = Array.isArray(body?.items) ? body.items : [];

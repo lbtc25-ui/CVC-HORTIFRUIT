@@ -48,7 +48,7 @@ import {
 import { lembrarProduto, pedidoCompraDaVenda } from "./lib/pedidoPdf";
 import { alertasUrgentes, painelDePedidos } from "./lib/previsaoPedidos";
 import { gerarReciboPdf } from "./lib/recibo";
-import { emitirNfeParaVenda, cancelarNfeDaVenda, registrarVendaSpedy, cancelarVendaSpedy, tributacaoDoProduto, codigoDaNota } from "./lib/spedy";
+import { emitirNfeParaVenda, cancelarNfeDaVenda, registrarVendaSpedy, cancelarVendaSpedy, tributacaoDoProduto, codigoDaNota, EMISSAO_NFE_DESABILITADA, AVISO_EMISSAO_DESABILITADA } from "./lib/spedy";
 import { contaExclui, contaVeAba, ehCampo, podeGerenciarCadastros, rotuloPapel } from "./lib/permissoes";
 import {
   buscarTokenPedido, buscarTokenPedidoGeral, buscarTokenPedidoRede, linkDePedido, linkDePedidoGeral, linkDePedidoRede,
@@ -4488,6 +4488,10 @@ const Vendas = ({ dados, setDados, podeRemover }) => {
                         // Cliente que pediu para não emitir NF (checkbox "Emitir NF" desmarcado): só recibo, sempre.
                         <span style={{ color: COLORS.cinza }} title="Este cliente não recebe NF-e: só o recibo do pedido">
                           Sem NF-e, só recibo
+                        </span>
+                      ) : EMISSAO_NFE_DESABILITADA ? (
+                        <span style={{ color: COLORS.cinza }} title={AVISO_EMISSAO_DESABILITADA}>
+                          NF-e desabilitada
                         </span>
                       ) : ehNotaSemanal(dados, v.lojaId) ? (
                         <button onClick={() => setFechandoSemana(v)}

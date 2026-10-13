@@ -13,6 +13,8 @@ import {
   danfeUrlSpedy,
   emitirNotaDevolucao,
   xmlUrlSpedy,
+  EMISSAO_NFE_DESABILITADA,
+  AVISO_EMISSAO_DESABILITADA,
 } from "../lib/spedy";
 import CartaCorrecaoModal from "../components/CartaCorrecaoModal";
 import { MOTIVO_AUTOMATICO, baixarPdfCartaCorrecao, lerConferidas, marcarConferida } from "../lib/cce";
@@ -145,7 +147,9 @@ export const EmitirDevolucaoModal = ({ dados, setDados, vendaInicial, onClose })
 
   return (
     <Modal title="Emitir nota de devolução" onClose={emitindo ? () => {} : onClose}>
-      {elegiveis.length === 0 ? (
+      {EMISSAO_NFE_DESABILITADA ? (
+        <p style={{ color: COLORS.cinza, fontSize: 14 }}>{AVISO_EMISSAO_DESABILITADA}</p>
+      ) : elegiveis.length === 0 ? (
         <p style={{ color: COLORS.cinza, fontSize: 14 }}>Nenhuma venda com NF-e autorizada para devolver.</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -305,7 +309,7 @@ const Devolucoes = ({ dados, setDados, podeApagar }) => {
           <Select label="Mês" value={mesAtivo} onChange={(e) => setMes(e.target.value)}
             options={meses.length ? meses.map((m) => ({ value: m, label: nomeDoMes(`${m}-01`) })) : [{ value: "", label: "—" }]} />
         </div>
-        <Btn icon="plus" onClick={() => setModal(true)}>Emitir nota de devolução</Btn>
+        {!EMISSAO_NFE_DESABILITADA && <Btn icon="plus" onClick={() => setModal(true)}>Emitir nota de devolução</Btn>}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>

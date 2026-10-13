@@ -40,6 +40,13 @@ import { pedidoCompraDaVenda } from "./pedidoPdf";
 
 const ENDPOINT = "/api/spedy";
 
+// Emissão de NF-e (venda, nota da semana e devolução) desligada no sistema da
+// CVC: as notas saem por fora do app. Consulta, DANFE/XML, cancelamento e
+// carta de correção das notas já emitidas continuam funcionando. Para religar,
+// volte para false aqui E em EMISSAO_NFE_DESABILITADA no api/spedy.js.
+export const EMISSAO_NFE_DESABILITADA = true;
+export const AVISO_EMISSAO_DESABILITADA = "A emissão de NF-e pelo sistema da CVC está desabilitada.";
+
 // Versão das regras da nota (código e descrição dos produtos). Vai em toda
 // chamada ao api/spedy.js, que só deixa emitir NF-e com a versão mínima de
 // lá — aparelho com o app antigo aberto (a atualização do PWA espera a
@@ -402,6 +409,7 @@ export function montarNotaSpedy({ venda, loja, produtosPorId }) {
 
 /** Cria a nota na Spedy. Devolve o objeto criado (com `id` e `status: "enqueued"`). */
 export async function criarNotaSpedy(payload, emitente) {
+  if (EMISSAO_NFE_DESABILITADA) throw new Error(AVISO_EMISSAO_DESABILITADA);
   return chamarSpedy("POST", "/product-invoices", payload, emitente);
 }
 

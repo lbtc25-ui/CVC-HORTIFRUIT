@@ -7,9 +7,9 @@
 //   SEFAZ_CERT_PFX_BASE64   o arquivo .pfx em base64
 //   SEFAZ_CERT_SENHA        a senha do .pfx
 //   SEFAZ_AMBIENTE          "producao" (padrão) ou "homologacao"
-//   SEFAZ_CNPJ              CNPJ que recebe as notas — por padrão, o do
-//                           certificado; para a filial com o certificado da
-//                           matriz, o CNPJ da filial (mesma raiz)
+//   SEFAZ_CNPJ              CNPJ que recebe as notas — por padrão, o da CVC
+//                           (CNPJ_CVC abaixo); para uma filial, o CNPJ dela
+//                           (mesma raiz do certificado)
 //   SEFAZ_UF_AUTOR          opcional — código IBGE da UF (padrão 28, Sergipe)
 //   SEFAZ_CA_PEM            opcional — cadeia ICP-Brasil em PEM (ver agente())
 //   SUPABASE_SERVICE_ROLE_KEY  para gravar as notas (a tabela é só leitura
@@ -53,6 +53,10 @@ import {
 } from "./_lib/dfe.js";
 
 const UMA_HORA = 3600 * 1000;
+// As notas emitidas contra a CVC (o mesmo de src/lib/empresa.js). É o padrão
+// mesmo sem SEFAZ_CNPJ: um certificado de outra empresa (o da Carvalho Cruz,
+// por engano) é recusado em vez de trazer as notas dela para o banco da CVC.
+export const CNPJ_CVC = "69196231000119";
 // Colunas de nfe_recebidas menos o xml, que é pesado e só vai quando muda.
 const COLUNAS = [
   "chave", "ambiente", "nsu", "emitente_cnpj", "emitente_nome", "emitente_fantasia", "emitente_ie",
@@ -80,8 +84,8 @@ function certificado() {
 function config() {
   const cert = certificado();
   const ambiente = process.env.SEFAZ_AMBIENTE === "homologacao" ? "homologacao" : "producao";
-  const cnpj = String(process.env.SEFAZ_CNPJ || cert.cnpj || "").replace(/\D/g, "");
-  if (cnpj.length !== 14) throw new ErroHttp(500, "Não deu para ler o CNPJ do certificado — defina SEFAZ_CNPJ na Vercel.");
+  const cnpj = String(process.env.SEFAZ_CNPJ || CNPJ_CVC).replace(/\D/g, "");
+  if (cnpj.length !== 14) throw new ErroHttp(500, `SEFAZ_CNPJ inválido (${process.env.SEFAZ_CNPJ}) — são os 14 números do CNPJ.`);
   // A SEFAZ aceita o certificado da matriz para consultar e manifestar por
   // uma filial, desde que a raiz (8 primeiros dígitos) seja a mesma.
   if (cert.cnpj && cnpj.slice(0, 8) !== cert.cnpj.slice(0, 8)) {

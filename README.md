@@ -878,8 +878,8 @@ acima), **Recebidas** e **Devoluções**.
 
 **Recebidas — as notas emitidas contra o nosso CNPJ, direto da SEFAZ.**
 O app consulta o serviço de **Distribuição DF-e** do Ambiente Nacional com o
-**certificado A1** da empresa e guarda toda NF-e em que a Carvalho Cruz
-aparece como destinatária — compra de fornecedor, devolução de cliente,
+**certificado A1** da empresa e guarda toda NF-e em que a CVC (CNPJ
+69.196.231/0001-19) aparece como destinatária — compra de fornecedor, devolução de cliente,
 remessa — na tabela `nfe_recebidas`. Quem fala com a SEFAZ é a Vercel
 Function `api/sefaz.js`: o certificado e a senha ficam só no servidor. (Antes
 isso passava pela Spedy, mas o recurso "notas recebidas" não estava no plano.)
@@ -963,8 +963,9 @@ de dar entrada, ou a nossa, depois de autorizada) mexe sozinha em duas contas:
     cron diário e a função só aceita o cron com ele.
   - Opcionais: `SEFAZ_AMBIENTE=homologacao` para testar (o padrão é
     produção); `SEFAZ_CNPJ` com o CNPJ que recebe as notas, quando não é o
-    do certificado — ex.: a filial usando o certificado da matriz (a raiz, os
-    8 primeiros dígitos, tem que ser a mesma; o padrão é o CNPJ do certificado);
+    da CVC — ex.: uma filial usando o certificado da matriz (a raiz, os 8
+    primeiros dígitos, tem que ser a mesma; o padrão é o CNPJ da CVC, e um
+    certificado de outra empresa — o da Carvalho Cruz — é recusado);
     `SEFAZ_CA_PEM` com a cadeia ICP-Brasil em PEM para a função conferir o
     certificado do servidor da SEFAZ (sem ela, a conexão segue sem essa
     conferência, como nas bibliotecas de NF-e em geral).

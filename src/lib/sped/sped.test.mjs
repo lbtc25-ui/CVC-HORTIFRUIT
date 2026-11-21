@@ -150,3 +150,10 @@ test("Sintegra: todas as linhas têm 126 posições e o 90 fecha a conta", () =>
   const r50 = tipo("50").find((l) => l.includes("000001") && l.includes("5101"));
   assert.ok(r50.includes("00000150000N") || r50.includes("0000000000000000000150000"), r50);
 });
+
+test("SPED Fiscal: inscrição municipal da CVC no 0000", () => {
+  const cvc = { ...empresa, nome: "CVC AGRONEGOCIOS LTDA", cnpj: "69196231000119" };
+  const { linhas } = gerarSpedFiscal({ empresa: cvc, periodo, documentos });
+  assert.equal(linhas[0].split("|")[12], "2430030");
+  assert.equal(campos(linhas[0]), 15);
+});

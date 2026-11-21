@@ -7,6 +7,7 @@
  * completa com a apuração do ICMS (bloco E), inventário (H) e os dados dele (0100).
  */
 
+import { inscricaoMunicipalDe } from "../empresa.js";
 import { cadastros } from "./escrituracao.js";
 import { dataSped } from "./formato.js";
 import { bloco, bloco9, blocosVazios, c100, c170, c190s, linha, reg0150, reg0190, reg0200, textoDoArquivo } from "./sped.js";
@@ -25,7 +26,8 @@ export function gerarSpedFiscal({ empresa, periodo, documentos }) {
 
   const zero = [
     linha("0000", versaoLeiauteFiscal(periodo.inicio.slice(0, 4)), "0", dataSped(periodo.inicio), dataSped(periodo.fim),
-      empresa.nome, empresa.cnpj, "", empresa.uf, empresa.ie, empresa.codMunicipio, "", "", "A", "1"),
+      empresa.nome, empresa.cnpj, "", empresa.uf, empresa.ie, empresa.codMunicipio,
+      empresa.im || inscricaoMunicipalDe(empresa.cnpj), "", "A", "1"),
   ];
   const cadastro0 = [
     linha("0005", empresa.fantasia || empresa.nome, empresa.cep, empresa.logradouro, empresa.numero, empresa.complemento,
